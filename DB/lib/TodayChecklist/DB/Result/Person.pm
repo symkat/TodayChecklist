@@ -156,6 +156,21 @@ __PACKAGE__->has_many(
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
+=head2 checklists
+
+Type: has_many
+
+Related object: L<TodayChecklist::DB::Result::Checklist>
+
+=cut
+
+__PACKAGE__->has_many(
+  "checklists",
+  "TodayChecklist::DB::Result::Checklist",
+  { "foreign.person_id" => "self.id" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
 =head2 person_settings
 
 Type: has_many
@@ -171,9 +186,24 @@ __PACKAGE__->has_many(
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
+=head2 templates
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-07-14 16:11:38
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:zmj6zl0oOEsPloF4hrJwng
+Type: has_many
+
+Related object: L<TodayChecklist::DB::Result::Template>
+
+=cut
+
+__PACKAGE__->has_many(
+  "templates",
+  "TodayChecklist::DB::Result::Template",
+  { "foreign.person_id" => "self.id" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
+
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-07-14 21:33:54
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:CTnewpolmUrqFPsuoykTtA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
