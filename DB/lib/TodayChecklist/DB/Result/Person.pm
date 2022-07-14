@@ -177,4 +177,59 @@ __PACKAGE__->has_many(
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
+
+use Data::GUID;
+
+sub setting {
+    my ( $self, $setting, $value ) = @_;
+
+    if ( defined $value ) {
+        my $rs = $self->find_or_new_related( 'person_settings', { name => $setting } );
+        $rs->value( ref $value ? $value : { value => $value } );
+
+        $rs->update if     $rs->in_storage;
+        $rs->insert unless $rs->in_storage;
+
+        return $value;
+    } else {
+        my $result = $self->find_related('person_settings', { name => $setting });
+        return undef unless $result;
+        return $self->_get_setting_value($result);
+    }
+}
+
+sub _get_setting_value {
+    my ( $self, $setting ) = @_;
+
+    if ( ref $setting->value eq 'HASH' and keys %{$setting->value} == 1 and exists $setting->value->{value} ) {
+        return $setting->value->{value};
+    }
+
+    return $setting->value;
+}
+
+sub get_settings {
+    my ( $self ) = @_;
+
+    my $return = {};
+
+    foreach my $setting ( $self->search_related( 'person_settings', {} )->all ) {
+        $return->{${\($setting->name)}} = $self->_get_setting_value($setting);
+    }
+
+    return $return;
+}
+
+sub create_auth_token {
+    my ( $self ) = @_;
+
+    my $token = Data::GUID->guid_string;
+
+    $self->create_related( 'auth_tokens', {
+        token => $token,
+    });
+
+    return $token;
+}
+
 1;
