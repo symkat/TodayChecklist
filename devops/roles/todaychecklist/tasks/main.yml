@@ -1,0 +1,209 @@
+---
+- name: Update all packages to their latest version
+  apt:
+    name: "*"
+    state: latest
+    update_cache: yes
+
+- name: Install packages
+  apt:
+    name: [
+      'git',
+      'build-essential',
+      'cpanminus',
+      'libssl-dev',
+      'libpq-dev',
+      'libz-dev',
+      'libexpat1-dev',
+      'vim',
+      'postgresql-client',
+      'postgresql-contrib',
+      'postgresql',
+      'python3-psycopg2',
+      'nginx',
+      'certbot',
+      'curl',
+      'python3-certbot-nginx',
+    ]
+    state: present
+
+- name: start postgresql
+  service:
+    name: postgresql
+    state: started
+    enabled: true
+
+- name: Create db user account for todaychecklist
+  postgresql_user:
+    name: "{{ database.todaychecklist.user }}"
+    password: "{{ database.todaychecklist.pass }}"
+    state: present
+  become_user: postgres
+  become: true
+
+- name: Create todaychecklist database
+  postgresql_db:
+    name: "{{ database.todaychecklist.name }}"
+    owner: "{{ database.todaychecklist.user }}"
+    state: present
+  become_user: postgres
+  become: true
+
+- name: Create manager user
+  user:
+    name: manager
+    shell: /bin/bash
+    comment: TodayChecklist Manager User Account
+
+- name: Create ~manager/.ssh
+  file:
+    state: directory
+    path: /home/manager/.ssh
+    owner: manager
+    group: manager
+    mode: 0700
+
+- name: Create ~manager/.ssh/authorized_keys from ~root
+  copy:
+    dest: /home/manager/.ssh/authorized_keys
+    src: /root/.ssh/authorized_keys
+    remote_src: true
+    owner: manager
+    group: manager
+    mode: 0600
+
+- name: Install /etc/todaychecklist.yml
+  template:
+    src: "{{ role_path }}/templates/todaychecklist.yml.j2"
+    dest: /etc/todaychecklist.yml
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Install ~/.vimrc for root.
+  copy:
+    dest: /root/.vimrc
+    src: "{{ role_path }}/files/vimrc"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Install ~/.vimrc for manager.
+  copy:
+    dest: /home/manager/.vimrc
+    src: "{{ role_path }}/files/vimrc"
+    owner: manager
+    group: manager
+    mode: 0644
+
+- name: "Git clone from https://github.com/yko/mojo.vim.git"
+  git:
+    repo: "https://github.com/yko/mojo.vim.git"
+    dest: /home/manager/mojo.vim
+    accept_hostkey: true
+  become: true
+  become_user: manager
+
+- name: Install mojo.vim plugin
+  shell: make install
+  args:
+    chdir: /home/manager/mojo.vim
+  become: true
+  become_user: manager
+
+- name: "Git clone from {{ repo }}"
+  git:
+    repo: "{{ repo }}"
+    dest: /home/manager/todaychecklist
+    accept_hostkey: true
+  become: true
+  become_user: manager
+
+- name: Install Dist::Zilla
+  shell: cpanm Dist::Zilla
+  environment:
+    PATH:                '/home/manager/perl5/bin:/usr/local/bin:/usr/bin:/bin'
+    PERL5LIB:            '/home/manager/perl5/lib/perl5'
+    PERL_MB_OPT:         '--install_base "/home/manager/perl5"'
+    PERL_MM_OPT:         'INSTALL_BASE=/home/manager/perl5'
+    PERL_LOCAL_LIB_ROOT: '/home/manager/perl5'
+  become: true
+  become_user: manager
+
+- name: Build TodayChecklist::DB
+  shell: dzil build
+  args:
+    chdir: /home/manager/todaychecklist/DB
+  environment:
+    PATH:                '/home/manager/perl5/bin:/usr/local/bin:/usr/bin:/bin'
+    PERL5LIB:            '/home/manager/perl5/lib/perl5'
+    PERL_MB_OPT:         '--install_base "/home/manager/perl5"'
+    PERL_MM_OPT:         'INSTALL_BASE=/home/manager/perl5'
+    PERL_LOCAL_LIB_ROOT: '/home/manager/perl5'
+  become: true
+  become_user: manager
+
+- name: Install TodayChecklist::DB
+  shell: cpanm TodayChecklist-DB-*.tar.gz
+  args:
+    chdir: /home/manager/todaychecklist/DB
+  environment:
+    PATH:                '/home/manager/perl5/bin:/usr/local/bin:/usr/bin:/bin'
+    PERL5LIB:            '/home/manager/perl5/lib/perl5'
+    PERL_MB_OPT:         '--install_base "/home/manager/perl5"'
+    PERL_MM_OPT:         'INSTALL_BASE=/home/manager/perl5'
+    PERL_LOCAL_LIB_ROOT: '/home/manager/perl5'
+  become: true
+  become_user: manager
+
+- name: Install TodayChecklist::Web Dependencies
+  shell: cpanm --installdeps .
+  args:
+    chdir: /home/manager/todaychecklist/Web
+  environment:
+    PATH:                '/home/manager/perl5/bin:/usr/local/bin:/usr/bin:/bin'
+    PERL5LIB:            '/home/manager/perl5/lib/perl5'
+    PERL_MB_OPT:         '--install_base "/home/manager/perl5"'
+    PERL_MM_OPT:         'INSTALL_BASE=/home/manager/perl5'
+    PERL_LOCAL_LIB_ROOT: '/home/manager/perl5'
+
+  become: true
+  become_user: manager
+
+- name: Import the TodayChecklist database
+  shell: /home/manager/todaychecklist/Web/script/todaychecklist dbc < /home/manager/todaychecklist/DB/etc/schema.sql > /home/manager/todaychecklist/DB/etc/schema.log
+  environment:
+    PATH:                '/home/manager/perl5/bin:/usr/local/bin:/usr/bin:/bin'
+    PERL5LIB:            '/home/manager/perl5/lib/perl5'
+    PERL_MB_OPT:         '--install_base "/home/manager/perl5"'
+    PERL_MM_OPT:         'INSTALL_BASE=/home/manager/perl5'
+    PERL_LOCAL_LIB_ROOT: '/home/manager/perl5'
+  become: true
+  become_user: manager
+
+- name: Install todaychecklist.service file.
+  copy:
+    dest: /etc/systemd/system/todaychecklist.service
+    src: "{{ role_path }}/files/todaychecklist.service"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Start TodayChecklist
+  service:
+    name: todaychecklist
+    state: restarted
+    enabled: true
+
+- name: "Install /etc/nginx/sites-enabled/{{ domain_name }}"
+  template:
+    src: "{{ role_path }}/templates/nginx-domain.j2"
+    dest: "/etc/nginx/sites-enabled/{{ domain_name }}"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: start nginx
+  service:
+    name: nginx
+    state: restarted

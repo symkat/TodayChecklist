@@ -1,0 +1,127 @@
+" general tweaks
+set nocompatible
+set ruler
+set number
+set wildmenu
+set backspace=indent,eol,start
+
+" code folding
+set foldlevel=100
+set foldmethod=indent
+
+" searching options
+set ignorecase
+set hlsearch
+set incsearch
+
+" coloring
+set background=dark
+syntax enable
+
+" indenting
+set expandtab
+set shiftwidth=4
+set smarttab
+set autoindent
+filetype plugin indent on
+
+" cool mappings for better editing
+map <F1> :wq<CR>
+map <F2> :w<CR>
+map <F3> :q<CR>
+vnoremap C :s/^/#/<CR>:nohl<CR>
+vnoremap c :s/^#//<CR>:nohl<CR>
+
+" Coding-specific things - they are selectively enabled for various file types
+
+" the following two functions are just for completing various kinds of
+" parentheses and brackets. they're seperate functions because they're so
+" common.
+
+fun CustomMacrosEnableBasicCompletion()
+    inoremap ( ()<Esc>i
+    inoremap [ []<Esc>i
+    inoremap { {}<Esc>i
+    inoremap (<Space> (  )<Esc>hi
+    inoremap [<Space> [  ]<Esc>hi
+    inoremap {<Space> {  }<Esc>hi
+    inoremap (<CR> (<CR>)<Esc>O
+    inoremap [<CR> [<CR>]<Esc>O
+    inoremap {<CR> {<CR>}<Esc>O
+endfun
+
+" function that is run whenever a new buffer is switched to - so we can set
+" proper macros depending on the type of the file that is opened
+fun SetCustomMacros()
+    if &filetype == "perl"
+        inoremap IFB if (  ) {<CR>}<Esc>O <Esc>xk$3hi
+        inoremap FOB for my $ (  ) {<CR>}<Esc>O <Esc>xk$6hi
+        inoremap WHB while (  ) {<CR>}<Esc>O <Esc>xk$3hi
+        call CustomMacrosEnableBasicCompletion()
+        map <F12> :!perl -c %<CR>
+        
+    elseif &filetype == "ruby"
+        inoremap do<CR> do<CR>end<Esc>O
+        inoremap IFB if  then<CR>end<Esc>O <Esc>xk$4hi
+        " for loops do not exist in ruby as they do in other languages
+        inoremap WHB while  do<CR>end<Esc>O <Esc>xk$2hi
+        call CustomMacrosEnableBasicCompletion()
+        map <F12> :!ruby -c %<CR>
+        
+    elseif &filetype == "python"
+        inoremap IFB if :<CR> <Esc>xk$i
+        inoremap FOB for  in :<CR> <Esc>xk$4hi
+        inoremap WHB while :<CR> <Esc>xk$i
+        call CustomMacrosEnableBasicCompletion()
+        " TODO - is there some way to syntax check a python program?
+        
+    elseif &filetype == "sh"
+        inoremap IFB if [  ]; then<CR>fi<Esc>O <Esc>xk$7hi
+        inoremap FOB for  in ; do<CR>done<Esc>O <Esc>xk$7hi
+        inoremap WHB while [  ]; do<CR>done<Esc>O <Esc>xk$5hi
+        inoremap UNB until [  ]; do<CR>done<Esc>O <Esc>xk$5hi
+        call CustomMacrosEnableBasicCompletion()
+        " TODO - is there some way to syntax check a shell script?
+        
+    elseif &filetype == "lua"
+        inoremap IFB if  then<CR>end<Esc>O <Esc>xk$4hi
+        inoremap FOB for  do<CR>end<Esc>O <Esc>xk$2hi
+        inoremap WHB while  do<CR>end<Esc>O <Esc>xk$2hi
+        call CustomMacrosEnableBasicCompletion()
+        map <F12> :!luac -p %<CR>
+        
+    elseif &filetype == "php"
+        " the <BS> (heh, how appropriate) is needed to get rid of the messed
+        " up syntax indentation in vim's way of dealing with php syntax
+        inoremap IFB if (  ) {<CR><BS>}<Esc>O <Esc>xk$3hi
+        inoremap WHB while (  ) {<CR><BS>}<Esc>O <Esc>xk$3hi
+        inoremap FOB for ( ; ;  ) {<CR><BS>}<Esc>O <Esc>xk$7hi
+        inoremap <?php <?php  ?><Esc>2hi
+        inoremap <?php<CR> <?php<CR>?><Esc>hi<BS><Esc>O
+        call CustomMacrosEnableBasicCompletion()
+        map <F12> :!php -l %<CR>
+        
+    elseif &filetype == "vim"
+        " no special ones for vim because that makes it hard to write this file!
+        " however, the basic parentheses and bracket completion macros are
+        " still useful, as they can always be reversed if needed.
+        call CustomMacrosEnableBasicCompletion()
+
+    " ignore the following types
+    elseif &filetype == ""     " null (no) type
+    elseif &filetype == "help" " internal help file
+    elseif &filetype == "html" " HTML hypertext
+    else
+        " TODO - other file formats. this should remind me.
+        echo "SetCustomMacros(): Unknown filetype " . &filetype . "."
+    endif
+endfun
+
+" finally, tie our functions in with the BufEnter and BufLeave automatic
+" command executors.
+augroup custom_macros
+    autocmd!
+    autocmd BufLeave * call ClearCustomMacros()
+    autocmd BufEnter * call SetCustomMacros()
+augroup END
+
