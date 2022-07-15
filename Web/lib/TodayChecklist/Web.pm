@@ -96,9 +96,9 @@ sub startup ($self) {
     $auth->post( '/template/:id/vars/remove' )->to('Template#remove_vars'    )->name('remove_template_vars'     );
 
     # Manage Checklists
-    $auth->get( '/checklist'                )->to('Checklist#create'        )->name('show_checklist_create'    );
-
-    
+    $auth->get ( '/checklist'                )->to('Checklist#index'         )->name('show_checklists'        );
+    $auth->get ( '/checklist/:template_id'   )->to('Checklist#create'        )->name('show_checklist_create'  );
+    $auth->post( '/checklist/:template_id'   )->to('Checklist#do_create'     )->name('do_checklist_create'    );
 
 }
 
