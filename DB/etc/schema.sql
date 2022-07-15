@@ -9,6 +9,8 @@ CREATE TABLE person (
     created_at                  timestamptz     not null default current_timestamp
 );
 
+INSERT INTO person ( name, email ) VALUES ( 'System User', 'system@todaychecklist.com' );
+
 -- Settings for a given user.  | Use with care, add things to the data model when you should.
 CREATE TABLE person_settings (
     id                          serial          PRIMARY KEY,
