@@ -86,7 +86,8 @@ sub startup ($self) {
     });
 
     # User dashboard
-    $auth->get( '/dashboard'                 )->to('Dashboard#index'         )->name('show_dashboard'    );
+    $auth->get( '/dashboard'                 )->to('Dashboard#index'         )->name('show_dashboard'           );
+    $auth->get( '/dashboard/templates'       )->to('Dashboard#templates'     )->name('show_dashboard_templates' );
 
     # Manage Templates
     $auth->get ( '/template'                 )->to('Template#create'         )->name('show_template_create'     );

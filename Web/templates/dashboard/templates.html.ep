@@ -2,6 +2,6 @@
 
 <div class="mt-5 mb-5"></div>
 
-%= include 'dashboard/_nav', page => 'checklists'
+%= include 'dashboard/_nav', page => 'templates'
 
 

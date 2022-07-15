@@ -1,0 +1,16 @@
+<!-- BEGIN dashboard/_nav.html.ep -->
+<ul class="nav nav-tabs mt-3 mb-3">
+    <li class="nav-item">
+        <a class="nav-link <%= $page eq 'checklists' ? 'active' : '' %>" <%= $page eq 'checklists' ? 'aria-current=page' : '' %> 
+            href="<%= $c->url_for( 'show_dashboard' ) %>">
+            <span data-feather="check-square"></span> My Checklists
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link <%= $page eq 'templates' ? 'active' : '' %>" <%= $page eq 'templates' ? 'aria-current=page' : '' %> 
+            href="<%= $c->url_for( 'show_dashboard_templates' ) %>">
+            <span data-feather="file-text"></span> My Templates
+        </a>
+    </li>
+</ul>
+<!-- END dashboard/_nav.html.ep -->
