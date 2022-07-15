@@ -33,7 +33,7 @@ sub do_create ($c) {
             push @{$c->stash->{errors}}, "The form field for " . $var->name . " is required.";
         }
 
-        if ( $var->template_var_type->name eq 'checklist_array' ) {
+        if ( $var->template_var_type->name eq 'array' ) {
             push @{$payload->{$var->name}}, split( /\n/, $c->param($var->name) );
         } else {
             $payload->{$var->name} = $c->param($var->name);

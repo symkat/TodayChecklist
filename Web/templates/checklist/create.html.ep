@@ -22,19 +22,19 @@
 
         % } elsif ( $elem->template_var_type->name eq 'textbox' ) {
             <div class="mb-3">
-                <label for="<%= $elem->name %>" class="form-label"><%= $elem->name %> - <span class="text-muted"><%= $elem->description %></span></label>
+                <label for="<%= $elem->name %>" class="form-label"><%= $elem->title %> - <span class="text-muted"><%= $elem->description %></span></label>
                 <textarea name="<%= $elem->name %>" class="form-control" id="tmpl" rows="5"><%= $c->stash->{'form_' . $elem->name} %></textarea>
             </div>
 
-        % } elsif ( $elem->template_var_type->name eq 'checklist_array' ) {
+        % } elsif ( $elem->template_var_type->name eq 'array' ) {
             <div class="mb-3">
-                <label for="<%= $elem->name %>" class="form-label"><%= $elem->name %> - <span class="text-muted"><%= $elem->description %></span></label>
+                <label for="<%= $elem->name %>" class="form-label"><%= $elem->title %> - <span class="text-muted"><%= $elem->description %></span></label>
                 <textarea name="<%= $elem->name %>" class="form-control" id="tmpl" rows="5"><%= $c->stash->{'form_' . $elem->name} %></textarea>
             </div>
 
         % } elsif ( $elem->template_var_type->name eq 'date' ) {
             <div class="mb-3">
-                <label for="<%= $elem->name %>" class="form-label"><%= $elem->name %> - <span class="text-muted"><%= $elem->description %></span></label>
+                <label for="<%= $elem->name %>" class="form-label"><%= $elem->title %> - <span class="text-muted"><%= $elem->description %></span></label>
                 <input name="<%= $elem->name %>" type="text" class="form-control date-selector" aria-label="Date" value="<%= $c->stash->{'form_' . $elem->name} %>">
             </div>
 

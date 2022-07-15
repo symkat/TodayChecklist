@@ -66,10 +66,10 @@
         <div class="col-auto">
             <select name="var_type" id="var_type" class="form-select" aria-label="Default select example">
                 <option selected>Select Type</option>
-                <option <%= $c->stash->{form_var_type} eq 'text'      ? 'selected' : '' %> value="text"     >Text</option>
-                <option <%= $c->stash->{form_var_type} eq 'textbox'   ? 'selected' : '' %> value="textbox"  >Textbox</option>
-                <option <%= $c->stash->{form_var_type} eq 'checklist' ? 'selected' : '' %> value="checklist_array">Checklist</option>
-                <option <%= $c->stash->{form_var_type} eq 'date'      ? 'selected' : '' %> value="date"     >Date</option>
+                <option <%= $c->stash->{form_var_type} eq 'text'      ? 'selected' : '' %> value="text"   >Text</option>
+                <option <%= $c->stash->{form_var_type} eq 'textbox'   ? 'selected' : '' %> value="textbox">Textbox</option>
+                <option <%= $c->stash->{form_var_type} eq 'checklist' ? 'selected' : '' %> value="array"  >Checklist</option>
+                <option <%= $c->stash->{form_var_type} eq 'date'      ? 'selected' : '' %> value="date"   >Date</option>
             </select>
         </div>
     </div>
