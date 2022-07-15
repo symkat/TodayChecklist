@@ -12,8 +12,36 @@
 
 <h3 class="h3 mt-5 mb-3">Variable List</h3>
 
-% foreach my $var ( @{$template_vars} ) {
-    %= $var->name
+% if ( $c->stash->{template_vars} ) {
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Remove</th>
+        </tr>
+    </thead>
+    <tbody>
+    % foreach my $var ( @{$template_vars} ) {
+        <tr>
+            <th><%= $var->name %></th>
+            <th><%= $var->template_var_type->name %></th>
+            <th><%= $var->description %></th>
+            <td>
+                <form method="post" action="<%= $c->url_for( 'remove_template_vars') %>">
+                    <input type="hidden" name="var_id" value="<%= $var->id %>">
+
+                    <button style="margin-left: 1.5em" class="btn btn-sm btn-outline-secondary">
+                        <span data-feather="trash-2"></span>
+                    </button>
+                </form>
+            </td>
+        </tr>
+    % }
+    </tbody>
+</table>
+
 % }
 
 <h3 class="h3 mt-5 mb-3">Add Variable</h3>

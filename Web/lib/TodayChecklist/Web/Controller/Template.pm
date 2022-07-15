@@ -71,4 +71,30 @@ sub do_vars ($c) {
     $c->redirect_to( $c->url_for( 'show_template_vars', { id => $id } ) );
 }
 
+sub remove_vars ($c) {
+    $c->stash->{template} = 'template/vars';
+
+    my $id       = $c->stash->{template_id}   = $c->param('id');
+    my $template = $c->stash->{template_obj}  = $c->db->template($id);
+    
+    my $var_id   = $c->param('var_id');
+    my $var_obj  = $c->db->template_var($var_id);
+
+    # Confirm permissions....
+    
+    # Var belongs to the template submitted.
+    push @{$c->stash->{errors}}, "You do not have permission to do that."
+        if $var_obj->template_id ne $template->id;
+   
+    # Template belongs to the current user.
+    push @{$c->stash->{errors}}, "You do not have permission to do that."
+        if $template->person_id ne $c->stash->{person}->id;
+
+    return if $c->stash->{errors};
+
+    $var_obj->delete;
+    
+    $c->redirect_to( $c->url_for( 'show_template_vars', { id => $id } ) );
+}
+
 1;
