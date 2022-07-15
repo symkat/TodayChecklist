@@ -73,7 +73,7 @@ sub do_render ($c) {
     $c->stash( $checklist->payload );
 
     $c->render(
-        inline => $checklist->template->template_content,
+        inline => $checklist->template->content,
     );
 }
 

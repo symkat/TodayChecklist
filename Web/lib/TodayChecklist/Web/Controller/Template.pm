@@ -11,7 +11,6 @@ sub do_create ($c) {
     my $name = $c->stash->{form_name} = $c->param('name');
     my $desc = $c->stash->{form_desc} = $c->param('desc');
     my $html = $c->stash->{form_tmpl} = $c->param('tmpl');
-    my $css  = $c->stash->{form_css}  = $c->param('css');
 
     push @{$c->stash->{errors}}, "Template name is required"         unless $name;
     push @{$c->stash->{errors}}, "Template description is required"  unless $desc;
@@ -20,10 +19,9 @@ sub do_create ($c) {
     return if $c->stash->{errors};
 
     my $template = $c->stash->{person}->create_related('templates', {
-        name => $name,
+        name        => $name,
         description => $desc,
-        template_content => $html,
-        ( $css ? ( css_content => $css ) : () ),
+        content     => $html,
     });
 
     $c->redirect_to( $c->url_for( 'show_template_vars', { id => $template->id } ) );
@@ -46,11 +44,13 @@ sub do_vars ($c) {
     push @{$c->stash->{template_vars}}, 
         $template->search_related( 'template_vars', {} )->all;
 
-    my $var_name = $c->stash->{form_var_name} = $c->param('var_name');
-    my $var_desc = $c->stash->{form_var_desc} = $c->param('var_desc');
-    my $var_type = $c->stash->{form_var_type} = $c->param('var_type');
+    my $var_name  = $c->stash->{form_var_name} = $c->param('var_name');
+    my $var_title = $c->stash->{form_var_name} = $c->param('var_title');
+    my $var_desc  = $c->stash->{form_var_desc} = $c->param('var_desc');
+    my $var_type  = $c->stash->{form_var_type} = $c->param('var_type');
 
     push @{$c->stash->{errors}}, "Variable name is required"         unless $var_name;
+    push @{$c->stash->{errors}}, "Variable title is required"        unless $var_title;
     push @{$c->stash->{errors}}, "Variable description is required"  unless $var_desc;
     push @{$c->stash->{errors}}, "Variable type is required"         unless $var_type;
 
@@ -64,6 +64,7 @@ sub do_vars ($c) {
 
     $template->create_related( 'template_vars', {
         name                 => $var_name,
+        title                => $var_title,
         description          => $var_desc,
         template_var_type_id => $type->id,
     });
@@ -103,8 +104,7 @@ sub editor ($c) {
 
     $c->stash->{form_name} = $template->name;
     $c->stash->{form_desc} = $template->description;
-    $c->stash->{html_tmpl} = $template->template_content;
-    $c->stash->{html_css}  = $template->css_content;
+    $c->stash->{html_tmpl} = $template->content;
 }
 
 sub do_editor ($c) {
@@ -114,7 +114,6 @@ sub do_editor ($c) {
     my $name = $c->stash->{form_name} = $c->param('name');
     my $desc = $c->stash->{form_desc} = $c->param('desc');
     my $html = $c->stash->{form_tmpl} = $c->param('tmpl');
-    my $css  = $c->stash->{form_css}  = $c->param('css');
 
     push @{$c->stash->{errors}}, "Template name is required"         unless $name;
     push @{$c->stash->{errors}}, "Template description is required"  unless $desc;
@@ -124,8 +123,7 @@ sub do_editor ($c) {
 
     $template->name( $name );
     $template->description( $desc );
-    $template->template_content( $html );
-    $template->css_content( $css );
+    $template->content( $html );
 
     $template->update;
 

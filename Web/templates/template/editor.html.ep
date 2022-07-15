@@ -30,11 +30,6 @@
     </div>
     
     <div class="mb-3">
-        <label for="css" class="form-label">CSS Content</label>
-        <textarea name="css" class="form-control" id="css" rows="5"><%= $c->stash->{html_css} %></textarea>
-    </div>
-    
-    <div class="mb-3">
         <button type="submit" class="btn btn-primary float-end">Update Template</button>
     </div>
 

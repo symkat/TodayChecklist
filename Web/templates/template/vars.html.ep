@@ -6,10 +6,6 @@
   </ol>
 </nav>
 
-<h3 class="h3 mt-5 mb-3">Template Content For Reference</h3>
-
-%= $template_obj->template_content
-
 <h3 class="h3 mt-5 mb-3">Variable List</h3>
 
 % if ( $c->stash->{template_vars} ) {
@@ -17,6 +13,7 @@
     <thead>
         <tr>
             <th>Name</th>
+            <th>Title</th>
             <th>Type</th>
             <th>Description</th>
             <th>Remove</th>
@@ -26,6 +23,7 @@
     % foreach my $var ( @{$template_vars} ) {
         <tr>
             <th><%= $var->name %></th>
+            <th><%= $var->title %></th>
             <th><%= $var->template_var_type->name %></th>
             <th><%= $var->description %></th>
             <td>
@@ -50,15 +48,25 @@
 
 <form method="POST" action="<%= $c->url_for( 'do_template_vars' ) %>">
     
+    <%= include '_base/form/input', type => 'text', name => 'var_name',
+        title => 'Variable Name',
+        help  => '',
+        value => $c->stash->{form_var_name}
+    %>
+    
+    <%= include '_base/form/input', type => 'text', name => 'var_title',
+        title => 'Variable Title',
+        help  => '',
+        value => $c->stash->{form_var_title}
+    %>
+
+    <%= include '_base/form/input', type => 'text', name => 'var_desc',
+        title => 'Variable Description',
+        help  => '',
+        value => $c->stash->{form_var_desc}
+    %>
+    
     <div class="row g-5">
-        <div class="col-auto">
-            <label for="var_name" class="form-label">Variable Name</label>
-        </div>
-
-        <div class="col-auto">
-            <input type="text" name="var_name" class="form-control" id="var_name" value="<%= $c->stash->{form_var_name} %>">
-        </div>
-
         <div class="col-auto">
             <label for="var_type" class="form-label">Variable Type</label>
         </div>
@@ -74,14 +82,16 @@
         </div>
     </div>
 
-    <%= include '_base/form/input', type => 'text', name => 'var_desc',
-        title => 'Variable Description',
-        help  => '',
-        value => $c->stash->{form_var_desc}
-    %>
 
     <div class="mb-3">
         <button type="submit" class="btn btn-primary float-end">Add Var</button>
     </div>
 
 </form>
+
+
+<h3 class="h3 mt-5 mb-3">Template Content For Reference</h3>
+
+<pre>
+%= $template_obj->content
+</pre>
