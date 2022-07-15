@@ -58,4 +58,41 @@ sub do_create ($c) {
     $c->redirect_to( $c->url_for( 'show_dashboard' ) );
 }
 
+sub do_render ($c) {
+    my $checklist_id = $c->param('checklist_id');
+    my $checklist    = $c->stash->{checklist} = $c->db->checklist($checklist_id);
+
+    if ( $c->stash->{person}->id ne $checklist->person_id ) {
+        $c->render(
+            text   => "Access denied",
+            status => 403,
+        );
+        return;
+    }
+
+    $c->stash( $checklist->payload );
+
+    $c->render(
+        inline => $checklist->template->template_content,
+    );
+}
+
+sub do_remove ($c) {
+    my $checklist_id = $c->param('id');
+    my $checklist    = $c->stash->{checklist} = $c->db->checklist($checklist_id);
+    
+    if ( $c->stash->{person}->id ne $checklist->person_id ) {
+        $c->render(
+            text   => "Access denied",
+            status => 403,
+        );
+        return;
+    }
+
+    $checklist->delete;
+
+    $c->redirect_to( $c->url_for( 'show_dashboard_checklist' ) );
+
+}
+
 1;

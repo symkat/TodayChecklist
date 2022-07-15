@@ -87,6 +87,7 @@ sub startup ($self) {
 
     # User dashboard
     $auth->get( '/dashboard'                 )->to('Dashboard#index'         )->name('show_dashboard'           );
+    $auth->get( '/dashboard/checklist'       )->to('Dashboard#checklist'     )->name('show_dashboard_checklist' );
     $auth->get( '/dashboard/templates'       )->to('Dashboard#templates'     )->name('show_dashboard_templates' );
 
     # Manage Templates
@@ -100,6 +101,8 @@ sub startup ($self) {
     $auth->get ( '/checklist'                )->to('Checklist#index'         )->name('show_checklists'        );
     $auth->get ( '/checklist/:template_id'   )->to('Checklist#create'        )->name('show_checklist_create'  );
     $auth->post( '/checklist/:template_id'   )->to('Checklist#do_create'     )->name('do_checklist_create'    );
+    $auth->post( '/checklist'                )->to('Checklist#do_render'     )->name('do_checklist_render'    );
+    $auth->post( '/checklist/:id/remove'     )->to('Checklist#do_remove'     )->name('remove_checklist'       );
 
 }
 

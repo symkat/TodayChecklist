@@ -4,8 +4,8 @@
 
 %= include 'dashboard/_nav', page => 'checklists'
 
-<a href="<%= $c->url_for( 'show_dashboard_checklist' ) %>" style="margin-left: 1.5em" class="btn btn-sm btn-outline-secondary float-end">
-    <span data-feather="settings"></span>
+<a href="<%= $c->url_for( 'show_dashboard' ) %>" style="margin-left: 1.5em" class="btn btn-sm btn-outline-secondary float-end">
+    <span data-feather="skip-back"></span>
 </a>
 
 % if ( $c->stash->{checklists} ) {
@@ -14,7 +14,7 @@
             <tr>
                 <th>Name</th>
                 <th>Description</th>
-                <th>Actions</th>
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody>
@@ -23,11 +23,10 @@
                 <th><%= $checklist->name %></th>
                 <th><%= $checklist->description %></th>
                 <td>
-                    <form method="post" target="_blank" action="<%= $c->url_for( 'do_checklist_render') %>">
-                        <input type="hidden" name="checklist_id" value="<%= $checklist->id %>">
+                    <form method="post" action="<%= $c->url_for( 'remove_checklist', id => $checklist->id ) %>">
 
-                        <button style="margin-left: 1.5em" class="btn btn-sm btn-outline-secondary">
-                            <span data-feather="printer"></span>
+                        <button type="submit" style="margin-left: 1.5em" class="btn btn-sm btn-outline-danger">
+                            <span data-feather="trash-2"></span>
                         </button>
                     </form>
                 </td>
