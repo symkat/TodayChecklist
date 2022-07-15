@@ -60,15 +60,16 @@ __PACKAGE__->table("template");
   data_type: 'text'
   is_nullable: 0
 
-=head2 template_content
+=head2 content
 
   data_type: 'text'
   is_nullable: 0
 
-=head2 css_content
+=head2 is_system
 
-  data_type: 'text'
-  is_nullable: 1
+  data_type: 'boolean'
+  default_value: false
+  is_nullable: 0
 
 =head2 created_at
 
@@ -92,10 +93,10 @@ __PACKAGE__->add_columns(
   { data_type => "text", is_nullable => 0 },
   "description",
   { data_type => "text", is_nullable => 0 },
-  "template_content",
+  "content",
   { data_type => "text", is_nullable => 0 },
-  "css_content",
-  { data_type => "text", is_nullable => 1 },
+  "is_system",
+  { data_type => "boolean", default_value => \"false", is_nullable => 0 },
   "created_at",
   {
     data_type     => "timestamp with time zone",
@@ -164,8 +165,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-07-14 21:33:54
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:KCOhhs6mZyvWlfLdKz932Q
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-07-15 20:45:43
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:9hl9VTiN45LKFnAE4faspw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

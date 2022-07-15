@@ -53,12 +53,12 @@ __PACKAGE__->table("checklist");
 =head2 name
 
   data_type: 'text'
-  is_nullable: 0
+  is_nullable: 1
 
 =head2 description
 
   data_type: 'text'
-  is_nullable: 0
+  is_nullable: 1
 
 =head2 template_id
 
@@ -92,9 +92,9 @@ __PACKAGE__->add_columns(
   "person_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
   "name",
-  { data_type => "text", is_nullable => 0 },
+  { data_type => "text", is_nullable => 1 },
   "description",
-  { data_type => "text", is_nullable => 0 },
+  { data_type => "text", is_nullable => 1 },
   "template_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
   "payload",
@@ -157,8 +157,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-07-14 21:33:54
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:PV/jOYohDpzTa/2er3NNHg
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-07-15 20:45:43
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:HMQ5m041n7nfiYle7W/JxQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

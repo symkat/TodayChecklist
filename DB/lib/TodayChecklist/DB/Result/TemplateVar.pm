@@ -55,9 +55,20 @@ __PACKAGE__->table("template_var");
   data_type: 'text'
   is_nullable: 0
 
+=head2 title
+
+  data_type: 'text'
+  is_nullable: 0
+
 =head2 description
 
   data_type: 'text'
+  is_nullable: 0
+
+=head2 weight
+
+  data_type: 'integer'
+  default_value: 10
   is_nullable: 0
 
 =head2 template_var_type_id
@@ -80,8 +91,12 @@ __PACKAGE__->add_columns(
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
   "name",
   { data_type => "text", is_nullable => 0 },
+  "title",
+  { data_type => "text", is_nullable => 0 },
   "description",
   { data_type => "text", is_nullable => 0 },
+  "weight",
+  { data_type => "integer", default_value => 10, is_nullable => 0 },
   "template_var_type_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
 );
@@ -131,8 +146,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-07-14 21:33:54
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:lqzC/YDRuU37/ECZnCTRnQ
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-07-15 20:45:43
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:4kzhRMBTmLfF9ojIX2w2sg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
