@@ -97,4 +97,60 @@ sub remove_vars ($c) {
     $c->redirect_to( $c->url_for( 'show_template_vars', { id => $id } ) );
 }
 
+sub editor ($c) {
+    my $id       = $c->stash->{template_id}   = $c->param('id');
+    my $template = $c->stash->{template_obj}  = $c->db->template($id);
+
+    $c->stash->{form_name} = $template->name;
+    $c->stash->{form_desc} = $template->description;
+    $c->stash->{html_tmpl} = $template->template_content;
+    $c->stash->{html_css}  = $template->css_content;
+}
+
+sub do_editor ($c) {
+    my $id       = $c->stash->{template_id}   = $c->param('id');
+    my $template = $c->stash->{template_obj}  = $c->db->template($id);
+    
+    my $name = $c->stash->{form_name} = $c->param('name');
+    my $desc = $c->stash->{form_desc} = $c->param('desc');
+    my $html = $c->stash->{form_tmpl} = $c->param('tmpl');
+    my $css  = $c->stash->{form_css}  = $c->param('css');
+
+    push @{$c->stash->{errors}}, "Template name is required"         unless $name;
+    push @{$c->stash->{errors}}, "Template description is required"  unless $desc;
+    push @{$c->stash->{errors}}, "Template html content is required" unless $html;
+
+    return if $c->stash->{errors};
+
+    $template->name( $name );
+    $template->description( $desc );
+    $template->template_content( $html );
+    $template->css_content( $css );
+
+    $template->update;
+
+    $c->redirect_to( $c->url_for( 'show_dashboard_templates' ) );
+
+}
+    
+sub do_remove ($c) {
+    my $id       = $c->stash->{template_id}   = $c->param('id');
+    my $template = $c->stash->{template_obj}  = $c->db->template($id);
+    
+    if ( $c->stash->{person}->id ne $template->person_id ) {
+        $c->render(
+            text   => "Access denied",
+            status => 403,
+        );
+        return;
+    }
+
+    $c->db->storage->schema->txn_do( sub {
+        $template->search_related( 'template_vars' )->delete;
+        $template->delete;
+    });
+
+    $c->redirect_to( $c->url_for( 'show_dashboard_templates' ) );
+}
+
 1;

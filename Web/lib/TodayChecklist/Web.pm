@@ -86,16 +86,20 @@ sub startup ($self) {
     });
 
     # User dashboard
-    $auth->get( '/dashboard'                 )->to('Dashboard#index'         )->name('show_dashboard'           );
-    $auth->get( '/dashboard/checklist'       )->to('Dashboard#checklist'     )->name('show_dashboard_checklist' );
-    $auth->get( '/dashboard/templates'       )->to('Dashboard#templates'     )->name('show_dashboard_templates' );
+    $auth->get( '/dashboard'                 )->to('Dashboard#index'         )->name('show_dashboard'                );
+    $auth->get( '/dashboard/checklist'       )->to('Dashboard#checklist'     )->name('show_dashboard_checklist'      );
+    $auth->get( '/dashboard/templates'       )->to('Dashboard#templates'     )->name('show_dashboard_templates'      );
+    $auth->get( '/dashboard/templates/edit'  )->to('Dashboard#templates_edit')->name('show_dashboard_templates_edit' );
 
     # Manage Templates
     $auth->get ( '/template'                 )->to('Template#create'         )->name('show_template_create'     );
     $auth->post( '/template'                 )->to('Template#do_create'      )->name('do_template_create'       );
     $auth->get ( '/template/:id/vars'        )->to('Template#vars'           )->name('show_template_vars'       );
     $auth->post( '/template/:id/vars'        )->to('Template#do_vars'        )->name('do_template_vars'         );
+    $auth->get ( '/template/:id/edit'        )->to('Template#editor'         )->name('show_template_editor'     );
+    $auth->post( '/template/:id/edit'        )->to('Template#do_editor'      )->name('do_template_editor'       );
     $auth->post( '/template/:id/vars/remove' )->to('Template#remove_vars'    )->name('remove_template_vars'     );
+    $auth->post( '/template/:id/remove'      )->to('Template#do_remove'      )->name('remove_template'          );
 
     # Manage Checklists
     $auth->get ( '/checklist'                )->to('Checklist#index'         )->name('show_checklists'        );

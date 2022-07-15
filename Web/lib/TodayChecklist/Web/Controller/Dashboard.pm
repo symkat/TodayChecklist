@@ -13,4 +13,16 @@ sub checklist ($c) {
     
 }
 
+sub templates ($c) { 
+    push @{$c->stash->{templates}},
+        $c->stash->{person}->search_related('templates')->all;
+    
+}
+
+sub templates_edit ($c) { 
+    push @{$c->stash->{templates}},
+        $c->stash->{person}->search_related('templates')->all;
+    
+}
+
 1;

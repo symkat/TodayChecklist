@@ -4,8 +4,8 @@
 
 %= include 'dashboard/_nav', page => 'templates'
 
-<a href="<%= $c->url_for( 'show_dashboard_templates_edit' ) %>" style="margin-left: 1.5em" class="btn btn-sm btn-outline-secondary float-end">
-    <span data-feather="settings"></span>
+<a href="<%= $c->url_for( 'show_dashboard_templates' ) %>" style="margin-left: 1.5em" class="btn btn-sm btn-outline-secondary float-end">
+    <span data-feather="skip-back"></span>
 </a>
 
 % if ( $c->stash->{templates} ) {
@@ -16,6 +16,7 @@
                 <th>Description</th>
                 <th>Edit Vars</th>
                 <th>Edit Template</th>
+                <th>Remove Template</th>
             </tr>
         </thead>
         <tbody>
@@ -32,6 +33,14 @@
                     <a href="<%= $c->url_for( 'show_template_editor', id => $template->id ) %>" style="margin-left: 1.5em" class="btn btn-sm btn-outline-secondary">
                         <span data-feather="file-text"></span>
                     </a>
+                </td>
+                <td>
+                    <form method="post" action="<%= $c->url_for( 'remove_template', id => $template->id ) %>">
+
+                        <button type="submit" style="margin-left: 1.5em" class="btn btn-sm btn-outline-danger">
+                            <span data-feather="trash-2"></span>
+                        </button>
+                    </form>
                 </td>
             </tr>
         % }
