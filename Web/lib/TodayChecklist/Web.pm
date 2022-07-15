@@ -87,6 +87,16 @@ sub startup ($self) {
 
     # User dashboard
     $auth->get( '/dashboard'                 )->to('Dashboard#index'         )->name('show_dashboard'    );
+
+    # Manage Templates
+    $auth->get ( '/template'                 )->to('Template#create'         )->name('show_template_create'     );
+    $auth->post( '/template'                 )->to('Template#do_create'      )->name('do_template_create'       );
+    $auth->get ( '/template/:id/vars'        )->to('Template#vars'           )->name('show_template_vars'       );
+    $auth->post( '/template/:id/vars'        )->to('Template#do_vars'        )->name('do_template_vars'         );
+
+    # Manage Checklists
+    $auth->get( '/checklist'                )->to('Checklist#create'        )->name('show_checklist_create'    );
+
     
 
 }

@@ -1,0 +1,59 @@
+% layout 'user', title => 'Create Template', sb_active => 'template';
+
+<nav aria-label="breadcrumb" class="mt-3 mb-3">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="<%= $c->url_for( 'show_dashboard' ) %>">Dashboard</a></li>
+  </ol>
+</nav>
+
+<h3 class="h3 mt-5 mb-3">Template Content For Reference</h3>
+
+%= $template_obj->template_content
+
+<h3 class="h3 mt-5 mb-3">Variable List</h3>
+
+% foreach my $var ( @{$template_vars} ) {
+    %= $var->name
+% }
+
+<h3 class="h3 mt-5 mb-3">Add Variable</h3>
+
+%= include '_base/error_window'
+
+<form method="POST" action="<%= $c->url_for( 'do_template_vars' ) %>">
+    
+    <div class="row g-5">
+        <div class="col-auto">
+            <label for="var_name" class="form-label">Variable Name</label>
+        </div>
+
+        <div class="col-auto">
+            <input type="text" name="var_name" class="form-control" id="var_name" value="<%= $c->stash->{form_var_name} %>">
+        </div>
+
+        <div class="col-auto">
+            <label for="var_type" class="form-label">Variable Type</label>
+        </div>
+
+        <div class="col-auto">
+            <select name="var_type" id="var_type" class="form-select" aria-label="Default select example">
+                <option selected>Select Type</option>
+                <option <%= $c->stash->{form_var_type} eq 'text'      ? 'selected' : '' %> value="text"     >Text</option>
+                <option <%= $c->stash->{form_var_type} eq 'textbox'   ? 'selected' : '' %> value="textbox"  >Textbox</option>
+                <option <%= $c->stash->{form_var_type} eq 'checklist' ? 'selected' : '' %> value="checklist_array">Checklist</option>
+                <option <%= $c->stash->{form_var_type} eq 'date'      ? 'selected' : '' %> value="date"     >Date</option>
+            </select>
+        </div>
+    </div>
+
+    <%= include '_base/form/input', type => 'text', name => 'var_desc',
+        title => 'Variable Description',
+        help  => '',
+        value => $c->stash->{form_var_desc}
+    %>
+
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary float-end">Add Var</button>
+    </div>
+
+</form>

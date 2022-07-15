@@ -29,9 +29,15 @@
                 </li>
             % }
             <li class="nav-item">
-                <a class="nav-link <%= $sb_active eq "graph" ? "active" : "" %>" href="<%= $c->url_for( 'show_graph_create' ) %>">
-                    <span data-feather="bar-chart-2"></span>
-                    Graph
+                <a class="nav-link <%= $sb_active eq "checklist" ? "active" : "" %>" href="<%= $c->url_for( 'show_checklist_create' ) %>">
+                    <span data-feather="check-square"></span>
+                    Checklist
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link <%= $sb_active eq "template" ? "active" : "" %>" href="<%= $c->url_for( 'show_template_create' ) %>">
+                    <span data-feather="file-text"></span>
+                    Template
                 </a>
             </li>
         </ul>

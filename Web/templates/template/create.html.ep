@@ -1,0 +1,41 @@
+% layout 'user', title => 'Create Template', sb_active => 'template';
+
+<nav aria-label="breadcrumb" class="mt-3 mb-3">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="<%= $c->url_for( 'show_dashboard' ) %>">Dashboard</a></li>
+  </ol>
+</nav>
+
+<h3 class="h3 mt-5 mb-3">Create Template</h3>
+
+%= include '_base/error_window'
+
+<form method="POST" action="<%= $c->url_for( 'do_template_create' ) %>">
+
+    <%= include '_base/form/input', type => 'text', name => 'name',
+        title => 'Template Name',
+        help  => '',
+        value => $c->stash->{form_name}
+    %>
+    
+    <%= include '_base/form/input', type => 'text', name => 'desc',
+        title => 'Template Description',
+        help  => '',
+        value => $c->stash->{form_desc}
+    %>
+
+    <div class="mb-3">
+        <label for="tmpl" class="form-label">HTML Template Content</label>
+        <textarea name="tmpl" class="form-control" id="tmpl" rows="5"><%= $c->stash->{html_tmpl} %></textarea>
+    </div>
+    
+    <div class="mb-3">
+        <label for="css" class="form-label">CSS Content</label>
+        <textarea name="css" class="form-control" id="css" rows="5"><%= $c->stash->{html_css} %></textarea>
+    </div>
+    
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary float-end">Create Template</button>
+    </div>
+
+</form>
