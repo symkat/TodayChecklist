@@ -42,8 +42,8 @@ CREATE TABLE template (
     person_id                   int             not null references person(id),
     name                        text            not null,
     description                 text            not null,
-    template_content            text            not null,
-    css_content                 text            ,
+    content                     text            not null,
+    is_system                   boolean         not null default false,
     created_at                  timestamptz     not null default current_timestamp
 );
 
@@ -52,27 +52,29 @@ CREATE TABLE template_var_type (
     name                        text            not null
 );
 
-INSERT INTO template_var_type ( name ) VALUES ( 'text'            );
-INSERT INTO template_var_type ( name ) VALUES ( 'textbox'         );
-INSERT INTO template_var_type ( name ) VALUES ( 'checklist_array' );
-INSERT INTO template_var_type ( name ) VALUES ( 'date'            );
-
+INSERT INTO template_var_type ( name ) VALUES ( 'text'    );
+INSERT INTO template_var_type ( name ) VALUES ( 'textbox' );
+INSERT INTO template_var_type ( name ) VALUES ( 'array'   );
+INSERT INTO template_var_type ( name ) VALUES ( 'date'    );
 
 CREATE TABLE template_var (
     id                          serial          PRIMARY KEY,
     template_id                 int             not null references template(id),
     name                        text            not null,
+    title                       text            not null,
     description                 text            not null,
+    weight                      int             not null default '10',
     template_var_type_id        int             not null references template_var_type(id)
 );
 
 CREATE TABLE checklist (
     id                          serial          PRIMARY KEY,
     person_id                   int             not null references person(id),
-    name                        text            not null,
-    description                 text            not null,
+    name                        text            ,
+    description                 text            ,
     template_id                 int             not null references template(id),
     payload                     json            not null default '{}',
     created_at                  timestamptz     not null default current_timestamp
 );
+
 
