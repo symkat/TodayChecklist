@@ -4,6 +4,9 @@ use Mojo::Base 'Mojolicious::Controller', -signatures;
 sub index ($c) {
     push @{$c->stash->{checklist_templates}},
         $c->stash->{person}->search_related( 'templates' )->all;
+    
+    push @{$c->stash->{system_templates}},
+        $c->db->templates( { is_system => 1 } )->all;
 }
 
 sub create ($c) { 
