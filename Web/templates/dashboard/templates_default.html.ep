@@ -1,0 +1,32 @@
+% layout 'user', title => 'Dashboard', sb_active => 'dashboard';
+
+<div class="mt-5 mb-5"></div>
+
+%= include 'dashboard/_nav', page => 'templates_default'
+
+% if ( $c->stash->{templates} ) {
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Make Copy</th>
+            </tr>
+        </thead>
+        <tbody>
+        % foreach my $template ( @{$templates} ) {
+            <tr>
+                <th><%= $template->name %></th>
+                <th><%= $template->description %></th>
+                <td>
+                    <form method="post" action="<%= $c->url_for( 'do_copy_template', id => $template->id ) %>">
+                        <button type="submit" style="margin-left: 1.5em" class="btn btn-sm btn-outline-secondary">
+                            <span data-feather="copy"></span>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        % }
+        </tbody>
+    </table>
+% }

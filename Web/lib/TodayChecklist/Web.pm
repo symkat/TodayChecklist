@@ -86,10 +86,11 @@ sub startup ($self) {
     });
 
     # User dashboard
-    $auth->get( '/dashboard'                 )->to('Dashboard#index'         )->name('show_dashboard'                );
-    $auth->get( '/dashboard/checklist'       )->to('Dashboard#checklist'     )->name('show_dashboard_checklist'      );
-    $auth->get( '/dashboard/templates'       )->to('Dashboard#templates'     )->name('show_dashboard_templates'      );
-    $auth->get( '/dashboard/templates/edit'  )->to('Dashboard#templates_edit')->name('show_dashboard_templates_edit' );
+    $auth->get( '/dashboard'                   )->to('Dashboard#index'             )->name('show_dashboard'                   );
+    $auth->get( '/dashboard/checklist'         )->to('Dashboard#checklist'         )->name('show_dashboard_checklist'         );
+    $auth->get( '/dashboard/templates'         )->to('Dashboard#templates'         )->name('show_dashboard_templates'         );
+    $auth->get( '/dashboard/templates/edit'    )->to('Dashboard#templates_edit'    )->name('show_dashboard_templates_edit'    );
+    $auth->get( '/dashboard/templates/default' )->to('Dashboard#templates_default' )->name('show_dashboard_templates_default' );
 
     # Manage Templates
     $auth->get ( '/template'                 )->to('Template#create'         )->name('show_template_create'     );
@@ -100,6 +101,7 @@ sub startup ($self) {
     $auth->post( '/template/:id/edit'        )->to('Template#do_editor'      )->name('do_template_editor'       );
     $auth->post( '/template/:id/vars/remove' )->to('Template#remove_vars'    )->name('remove_template_vars'     );
     $auth->post( '/template/:id/remove'      )->to('Template#do_remove'      )->name('remove_template'          );
+    $auth->post( '/template/:id/copy'        )->to('Template#do_copy'        )->name('do_copy_template'         );
 
     # Manage Checklists
     $auth->get ( '/checklist'                )->to('Checklist#index'         )->name('show_checklists'        );
@@ -107,6 +109,7 @@ sub startup ($self) {
     $auth->post( '/checklist/:template_id'   )->to('Checklist#do_create'     )->name('do_checklist_create'    );
     $auth->post( '/checklist'                )->to('Checklist#do_render'     )->name('do_checklist_render'    );
     $auth->post( '/checklist/:id/remove'     )->to('Checklist#do_remove'     )->name('remove_checklist'       );
+
 
 }
 

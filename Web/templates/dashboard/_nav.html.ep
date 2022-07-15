@@ -12,5 +12,11 @@
             <span data-feather="file-text"></span> My Templates
         </a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link <%= $page eq 'templates_default' ? 'active' : '' %>" <%= $page eq 'templates_default' ? 'aria-current=page' : '' %> 
+            href="<%= $c->url_for( 'show_dashboard_templates_default' ) %>">
+            <span data-feather="file"></span> Default Templates
+        </a>
+    </li>
 </ul>
 <!-- END dashboard/_nav.html.ep -->

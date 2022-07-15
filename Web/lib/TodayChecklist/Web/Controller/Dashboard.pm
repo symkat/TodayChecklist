@@ -25,4 +25,9 @@ sub templates_edit ($c) {
     
 }
 
+sub templates_default ($c) { 
+    push @{$c->stash->{templates}},
+        $c->db->templates( { is_system => 1 } )->all;
+}
+
 1;

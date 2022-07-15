@@ -130,6 +130,42 @@ sub do_editor ($c) {
     $c->redirect_to( $c->url_for( 'show_dashboard_templates' ) );
 
 }
+
+sub do_copy ($c) {
+    my $id       = $c->stash->{template_id}   = $c->param('id');
+    my $template = $c->stash->{template_obj}  = $c->db->template($id);
+    
+    # Only allow system templates to be copied.
+    if ( ! $template->is_system ) {
+        $c->render(
+            text   => "Access denied",
+            status => 403,
+        );
+        return;
+    }
+
+    $c->db->storage->schema->txn_do( sub {
+        my $copy = $c->stash->{person}->create_related( 'templates', {
+            name        => 'Copy of ' . $template->name,
+            description => $template->description,
+            content     => $template->content,
+        });
+
+        my $rs = $template->search_related('template_vars');
+
+        while ( my $var = $rs->next ) {
+            $copy->create_related('template_vars', {
+                name                 => $var->name,
+                title                => $var->title,
+                description          => $var->description,
+                weight               => $var->weight,
+                template_var_type_id => $var->template_var_type_id,
+            });
+        }
+    });
+    
+    $c->redirect_to( $c->url_for( 'show_dashboard_templates' ) );
+}
     
 sub do_remove ($c) {
     my $id       = $c->stash->{template_id}   = $c->param('id');
