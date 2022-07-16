@@ -12,6 +12,7 @@
     <table class="table">
         <thead>
             <tr>
+                <th>ID</th>
                 <th>Name</th>
                 <th>Description</th>
                 <th>Edit Vars</th>
@@ -21,6 +22,7 @@
         <tbody>
         % foreach my $template ( @{$templates} ) {
             <tr>
+                <th><%= $template->id %></th>
                 <th><%= $template->name %></th>
                 <th><%= $template->description %></th>
                 <td>
