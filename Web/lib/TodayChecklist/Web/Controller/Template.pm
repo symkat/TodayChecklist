@@ -146,7 +146,7 @@ sub do_copy ($c) {
 
     $c->db->storage->schema->txn_do( sub {
         my $copy = $c->stash->{person}->create_related( 'templates', {
-            name        => 'Copy of ' . $template->name,
+            name        => $template->name,
             description => $template->description,
             content     => $template->content,
         });
