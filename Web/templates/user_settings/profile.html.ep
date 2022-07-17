@@ -1,4 +1,4 @@
-% layout 'layout', title => 'Profile', sb_active => 'profile';
+% layout 'user', title => 'Profile', sb_active => 'profile';
 
 <h2 style="margin-top: 1.5em" class="h2">Change your name or email</h2>
 
