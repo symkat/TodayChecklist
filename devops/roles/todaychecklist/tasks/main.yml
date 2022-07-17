@@ -172,6 +172,8 @@
 
 - name: Import the TodayChecklist database
   shell: /home/manager/todaychecklist/Web/script/todaychecklist dbc < /home/manager/todaychecklist/DB/etc/schema.sql > /home/manager/todaychecklist/DB/etc/schema.log
+  args:
+    creates: /home/manager/todaychecklist/DB/etc/schema.log
   environment:
     PATH:                '/home/manager/perl5/bin:/usr/local/bin:/usr/bin:/bin'
     PERL5LIB:            '/home/manager/perl5/lib/perl5'
@@ -181,8 +183,16 @@
   become: true
   become_user: manager
 
+- name: Get template file names from host
+  find:
+    paths: /home/manager/todaychecklist/DB/etc/templates/
+  register: templates
+
+
 - name: Import the TodayChecklist default templates
-  shell: /home/manager/todaychecklist/Web/script/todaychecklist import_template {{ item }} > {{ item.log }}
+  shell: /home/manager/todaychecklist/Web/script/todaychecklist import_template "{{ item.path }}" > "{{ item.path }}.log"
+  args:
+    creates: "{{ item.path }}.log"
   environment:
     PATH:                '/home/manager/perl5/bin:/usr/local/bin:/usr/bin:/bin'
     PERL5LIB:            '/home/manager/perl5/lib/perl5'
@@ -191,8 +201,8 @@
     PERL_LOCAL_LIB_ROOT: '/home/manager/perl5'
   become: true
   become_user: manager
-  with_fileglob:
-    - "/home/manager/todaychecklist/DB/etc/templates/*.json"
+  with_items:
+    - "{{ templates.files }}"
 
 - name: Install todaychecklist.service file.
   copy:
