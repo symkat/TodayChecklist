@@ -1,12 +1,12 @@
 use utf8;
-package TodayChecklist::DB::Result::Template;
+package TodayChecklist::DB::Result::Document;
 
 # Created by DBIx::Class::Schema::Loader
 # DO NOT MODIFY THE FIRST PART OF THIS FILE
 
 =head1 NAME
 
-TodayChecklist::DB::Result::Template
+TodayChecklist::DB::Result::Document
 
 =cut
 
@@ -29,11 +29,11 @@ use base 'DBIx::Class::Core';
 
 __PACKAGE__->load_components("InflateColumn::DateTime", "InflateColumn::Serializer");
 
-=head1 TABLE: C<template>
+=head1 TABLE: C<document>
 
 =cut
 
-__PACKAGE__->table("template");
+__PACKAGE__->table("document");
 
 =head1 ACCESSORS
 
@@ -42,7 +42,7 @@ __PACKAGE__->table("template");
   data_type: 'integer'
   is_auto_increment: 1
   is_nullable: 0
-  sequence: 'template_id_seq'
+  sequence: 'document_id_seq'
 
 =head2 person_id
 
@@ -53,23 +53,25 @@ __PACKAGE__->table("template");
 =head2 name
 
   data_type: 'text'
-  is_nullable: 0
+  is_nullable: 1
 
 =head2 description
 
   data_type: 'text'
+  is_nullable: 1
+
+=head2 template_id
+
+  data_type: 'integer'
+  is_foreign_key: 1
   is_nullable: 0
 
-=head2 content
+=head2 payload
 
-  data_type: 'text'
+  data_type: 'json'
+  default_value: '{}'
   is_nullable: 0
-
-=head2 is_system
-
-  data_type: 'boolean'
-  default_value: false
-  is_nullable: 0
+  serializer_class: 'JSON'
 
 =head2 created_at
 
@@ -85,18 +87,23 @@ __PACKAGE__->add_columns(
     data_type         => "integer",
     is_auto_increment => 1,
     is_nullable       => 0,
-    sequence          => "template_id_seq",
+    sequence          => "document_id_seq",
   },
   "person_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
   "name",
-  { data_type => "text", is_nullable => 0 },
+  { data_type => "text", is_nullable => 1 },
   "description",
-  { data_type => "text", is_nullable => 0 },
-  "content",
-  { data_type => "text", is_nullable => 0 },
-  "is_system",
-  { data_type => "boolean", default_value => \"false", is_nullable => 0 },
+  { data_type => "text", is_nullable => 1 },
+  "template_id",
+  { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
+  "payload",
+  {
+    data_type        => "json",
+    default_value    => "{}",
+    is_nullable      => 0,
+    serializer_class => "JSON",
+  },
   "created_at",
   {
     data_type     => "timestamp with time zone",
@@ -119,36 +126,6 @@ __PACKAGE__->set_primary_key("id");
 
 =head1 RELATIONS
 
-=head2 checklists
-
-Type: has_many
-
-Related object: L<TodayChecklist::DB::Result::Checklist>
-
-=cut
-
-__PACKAGE__->has_many(
-  "checklists",
-  "TodayChecklist::DB::Result::Checklist",
-  { "foreign.template_id" => "self.id" },
-  { cascade_copy => 0, cascade_delete => 0 },
-);
-
-=head2 documents
-
-Type: has_many
-
-Related object: L<TodayChecklist::DB::Result::Document>
-
-=cut
-
-__PACKAGE__->has_many(
-  "documents",
-  "TodayChecklist::DB::Result::Document",
-  { "foreign.template_id" => "self.id" },
-  { cascade_copy => 0, cascade_delete => 0 },
-);
-
 =head2 person
 
 Type: belongs_to
@@ -164,24 +141,24 @@ __PACKAGE__->belongs_to(
   { is_deferrable => 0, on_delete => "NO ACTION", on_update => "NO ACTION" },
 );
 
-=head2 template_vars
+=head2 template
 
-Type: has_many
+Type: belongs_to
 
-Related object: L<TodayChecklist::DB::Result::TemplateVar>
+Related object: L<TodayChecklist::DB::Result::Template>
 
 =cut
 
-__PACKAGE__->has_many(
-  "template_vars",
-  "TodayChecklist::DB::Result::TemplateVar",
-  { "foreign.template_id" => "self.id" },
-  { cascade_copy => 0, cascade_delete => 0 },
+__PACKAGE__->belongs_to(
+  "template",
+  "TodayChecklist::DB::Result::Template",
+  { id => "template_id" },
+  { is_deferrable => 0, on_delete => "NO ACTION", on_update => "NO ACTION" },
 );
 
 
 # Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-07-20 02:08:57
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:xZqnn853SjTRrtGDns7lOQ
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:jOC84Jfq0hIYm1veh0mehg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

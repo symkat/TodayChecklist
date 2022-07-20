@@ -79,4 +79,14 @@ CREATE TABLE checklist (
     created_at                  timestamptz     not null default current_timestamp
 );
 
+CREATE TABLE document (
+    id                          serial          PRIMARY KEY,
+    person_id                   int             not null references person(id),
+    name                        text            ,
+    description                 text            ,
+    template_id                 int             not null references template(id),
+    payload                     json            not null default '{}',
+    created_at                  timestamptz     not null default current_timestamp
+);
+
 
