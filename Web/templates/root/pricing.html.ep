@@ -1,0 +1,71 @@
+% layout 'nologin', title => 'Pricing', sb_active => 'pricing';
+
+<header>
+    <div class="pricing-header mt-5 mb-3 p-3 pb-md-4 mx-auto text-center">
+        <h1 class="display-4 fw-normal mb-3">Plan Pricing</h1>
+        <p class="fs-5 text-muted">
+            After you've registered, you can choose to subscribe to the personal plan for unlimited documents and templates.
+        </p>
+        <p class="fs-5 text-muted">
+            Free accounts otherwise have access to all of the same functionality.
+        </p>
+    </div>
+</header>
+
+<main>
+    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+        <div class="col">
+            <div class="card mb-4 rounded-3 shadow-sm">
+                <div class="card-header py-3">
+                    <h4 class="my-0 fw-normal">Free</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">$0<small class="text-muted fw-light"></small></h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>7 Documents</li>
+                        <li>5 Templates</li>
+                    </ul>
+                    <a href="<%= $c->url_for( 'show_register' ) %>" class="button w-100 btn btn-lg btn-outline-primary">Register</a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card mb-4 rounded-3 shadow-sm border-primary">
+                <div class="card-header py-3 text-white bg-primary border-primary">
+                    <h4 class="my-0 fw-normal">Personal</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">$4<small class="text-muted fw-light">/mo</small></h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>Unlimited Documents</li>
+                        <li>Unlimited Templates</li>
+                    </ul>
+                    <a href="<%= $c->url_for( 'show_register' ) %>" class="button w-100 btn btn-lg btn-primary">Register</a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card mb-4 rounded-3 shadow-sm">
+                <div class="card-header py-3">
+                    <h4 class="my-0 fw-normal">Hosted</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">$97<small class="text-muted fw-light">/mo</small></h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>Your own TodayChecklist on your own domain</li>
+                        <li>Unlimited Users/Documents/Templates</li>
+                        <li>Create Default Templates</li>
+                    </ul>
+                    <a href="<%= $c->url_for( 'show_contact' ) %>" class="button w-100 btn btn-lg btn-outline-primary">Contact</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pricing-header mt-5 p-3 pb-md-4 mx-auto text-center">
+        <h2 class="display-6 text-center mb-4">Run It Yourself</h2>
+        <p class="fs-5 text-muted">
+            TodayChecklist is an open-source application.  You can find the source and documentation <a target="_blank" href="https://github.com/symkat/TodayChecklist">on GitHub.</a>
+        </p>
+    </div>
+</main>

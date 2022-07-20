@@ -1,0 +1,83 @@
+% layout 'nologin', title => 'Homepage', sb_active => 'home';
+
+<header>
+    <div class="pricing-header mt-5 mb-3 p-3 pb-md-4 mx-auto text-center">
+        <h1 class="display-4 fw-normal mb-3">Welcome To Today Checklist</h1>
+        <p class="fs-5 text-muted">
+            Today Checklist makes paper planning quick.
+        </p>
+    </div>
+</header>
+
+<div class="pricing-header mt-5 p-3 pb-md-4 mx-auto text-center">
+    <h2 class="display-6 text-center mb-4">Create a document</h2>
+    <p class="fs-5 text-muted">
+        Documents are intended to be printed and added to your paper planning system.  Each document is a template, and the answers to the questions the template asks.
+    </p>
+</div>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Step 1: Choose a template</h5>
+                <p class="card-text">Templates are printable HTML files.  There are templates for checklists, projects, and more.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Step 2: Fill in the form</h5>
+                <p class="card-text">Templates combine the HTML with your answers to questions.  You might answer the steps to complete something for a checklist, a start date or something else.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Step 3: Save &amp; Print</h5>
+                <p class="card-text">Once a template is selected and the answers are filled in the form can be saved and printed to add to your paper planning.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-5 mb-5">
+    <div class="row">
+    </div>
+</div>
+
+<div class="pricing-header mt-5 p-3 pb-md-4 mx-auto text-center">
+    <h2 class="display-6 text-center mb-4">Create a template</h2>
+    <p class="fs-5 text-muted">
+        Templates are HTML documents that use the Text::Xslate templating engine.  Variables can be attached that will prompt you to answer questions when you create a document from the template.
+    </p>
+</div>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Step 1: Write the HTML</h5>
+                <p class="card-text">When you create a template you will be prompted for its name, a description, and the template content.  You can use <a href="https://metacpan.org/pod/Text::Xslate::Syntax::Kolon">Kolon Syntax for Template::Xslate</a>.  You can copy and edit any default template as well.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Step 2: Attach variables</h5>
+                <p class="card-text">The name of a variable can be used in the template, the title and description will be used to prompt you for an answer.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Step 3: Save &amp; Use</h5>
+                <p class="card-text">Once you are finished attaching variables, create a document from the template to see it in action!</p>
+            </div>
+        </div>
+    </div>
+</div>

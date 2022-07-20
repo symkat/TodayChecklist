@@ -61,6 +61,12 @@ sub startup ($self) {
         return undef;
     });
 
+    # General Informational Pages
+    $r->get   ( '/'        )->to( 'Root#index'    )->name('show_homepage' );
+    $r->get   ( '/about'   )->to( 'Root#about'    )->name('show_about'    );
+    $r->get   ( '/pricing' )->to( 'Root#pricing'  )->name('show_pricing'  );
+    $r->get   ( '/contact' )->to( 'Root#contact'  )->name('show_contact'  );
+
     # User registration, login, and logout.
     $r->get   ( '/register' )->to( 'Auth#register'    )->name('show_register' );
     $r->post  ( '/register' )->to( 'Auth#do_register' )->name('do_register'   );
@@ -81,9 +87,9 @@ sub startup ($self) {
     $auth->post( '/password' )->to('UserSettings#do_change_password' )->name('do_change_password'   );
 
     # Send requests for / to the dashboard.
-    $r->get('/')->to(cb => sub ($c) {
-        $c->redirect_to( $c->url_for('dashboard') );
-    });
+    #$r->get('/')->to(cb => sub ($c) {
+    #    $c->redirect_to( $c->url_for('dashboard') );
+    #});
 
     # User dashboard
     $auth->get( '/dashboard'                   )->to('Dashboard#index'             )->name('show_dashboard'                   );

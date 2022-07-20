@@ -1,0 +1,17 @@
+% layout 'nologin', title => 'About', sb_active => 'about';
+
+<h2 class="mt-5 display-6 mb-4">About This Site</h2>
+
+<p class="fs-5 text-muted">Hello Wonderful Internet Person!</p>
+
+<p class="fs-5 text-muted">I’m Kate and I wrote TodayChecklist.</p>
+
+<p class="fs-5 text-muted">I like to do a lot of planning on paper, but I also like the speed of typing things out.</p>
+
+<p class="fs-5 text-muted">A lot of the stuff I prefer to type out is project plans or checklists.  The idea for TodayChecklist came to me pretty suddenly that it would be really neat to have customized templates that could be printed with all the boiler-plate done and then to be asked the specific questions to fill the rest of it in.  Print the document and use my normal paper planning methods from there.</p>
+
+<p class="fs-5 text-muted">I set about writing it and then I wanted to take it a step further: offer it to others and give them the opportunity to pay for my work.</p>
+
+<p class="fs-5 text-muted">Now I invite you to take it a step further: <a href="<%= $c->url_for('show_register') %>">register</a> for an account and play around with it.  If you like it, consider subscribing to the personal account or getting a hosted instance.  If you want to learn how it works, read the <a href="https://github.com/symkat/TodayChecklist">code</a>.</p>
+
+<p class="fs-5 text-muted">Thanks for reading!</p>

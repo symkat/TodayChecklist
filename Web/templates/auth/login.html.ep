@@ -1,11 +1,5 @@
 % layout 'nologin', title => 'Register', sb_active => 'login';
 
-
-%  if ( $c->stash->{person} ) {
-%=   $c->stash->{person}->id
-%  }
-
-
 <h2 style="margin-top: 1.5em" class="h2">Login</h2>
 
 % if ( $c->stash->{errors} ) {

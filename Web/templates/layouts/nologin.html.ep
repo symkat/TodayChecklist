@@ -21,40 +21,58 @@
     <div class="container-fluid">
         <div class="row">
             <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-              <div class="position-sticky pt-3">
-                <ul class="nav flex-column">
-                  <li class="nav-item">
-                  <a class="nav-link <%= $sb_active eq "home" ? "active" : "" %>"  aria-current="page" href="/">
-                      <span data-feather="home"></span>
-                      Home
-                    </a>
-                  </li>
-                </ul>
+                <div class="position-sticky pt-3">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link <%= $sb_active eq "home" ? "active" : "" %>"  aria-current="page" href="<%= $c->url_for( 'show_homepage' ) %>">
+                                <span data-feather="home"></span>
+                                Home
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <%= $sb_active eq "about" ? "active" : "" %>"  aria-current="page" href="<%= $c->url_for( 'show_about' ) %>">
+                                <span data-feather="info"></span>
+                                About
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <%= $sb_active eq "pricing" ? "active" : "" %>"  aria-current="page" href="<%= $c->url_for( 'show_pricing' ) %>">
+                                <span data-feather="dollar-sign"></span>
+                                Pricing
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <%= $sb_active eq "contact" ? "active" : "" %>"  aria-current="page" href="<%= $c->url_for( 'show_contact' ) %>">
+                                <span data-feather="mail"></span>
+                                Contact
+                            </a>
+                        </li>
+                    </ul>
 
-                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                    <span>Helpful Links</span>
-                </h6>
-                <ul class="nav flex-column mb-2">
-                  <li class="nav-item">
-                      <a class="nav-link <%= $sb_active eq "login" ? "active" : "" %>" href="<%= $c->url_for( 'show_login' ) %>">
-                      <span data-feather="cpu"></span>
-                      Login
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link <%= $sb_active eq "register" ? "active" : "" %>" href="<%= $c->url_for( 'show_register' ) %>">
-                      <span data-feather="share-2"></span>
-                      Register
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link <%= $sb_active eq "forgot" ? "active" : "" %>" href="<%= $c->url_for( 'show_forgot' ) %>">
-                      <span data-feather="share-2"></span>
-                      Forgot Password
-                    </a>
-                  </li>
-                </ul>
-              </div>
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                        <span>Your Account</span>
+                    </h6>
+                    <ul class="nav flex-column mb-2">
+                        <li class="nav-item">
+                            <a class="nav-link <%= $sb_active eq "login" ? "active" : "" %>" href="<%= $c->url_for( 'show_login' ) %>">
+                                <span data-feather="user"></span>
+                                Login
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <%= $sb_active eq "register" ? "active" : "" %>" href="<%= $c->url_for( 'show_register' ) %>">
+                                <span data-feather="log-in"></span>
+                                Register
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <%= $sb_active eq "forgot" ? "active" : "" %>" href="<%= $c->url_for( 'show_forgot' ) %>">
+                                <span data-feather="help-circle"></span>
+                                Forgot Password
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </nav>
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 <%= content %>
