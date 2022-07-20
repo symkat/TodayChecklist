@@ -103,13 +103,6 @@ sub startup ($self) {
     $auth->post( '/template/:id/remove'      )->to('Template#do_remove'      )->name('remove_template'          );
     $auth->post( '/template/:id/copy'        )->to('Template#do_copy'        )->name('do_copy_template'         );
 
-    # Manage Checklists
-    $auth->get ( '/checklist'                )->to('Checklist#index'         )->name('show_checklists'        );
-    $auth->get ( '/checklist/:template_id'   )->to('Checklist#create'        )->name('show_checklist_create'  );
-    $auth->post( '/checklist/:template_id'   )->to('Checklist#do_create'     )->name('do_checklist_create'    );
-    $auth->post( '/checklist'                )->to('Checklist#do_render'     )->name('do_checklist_render'    );
-    $auth->post( '/checklist/:id/remove'     )->to('Checklist#do_remove'     )->name('remove_checklist'       );
-    
     # Manage Documents
     $auth->get ( '/document'                )->to('Document#index'         )->name('show_documents'        );
     $auth->get ( '/document/:template_id'   )->to('Document#create'        )->name('show_document_create'  );

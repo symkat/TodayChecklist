@@ -2,40 +2,11 @@
 
 <div class="mt-5 mb-5"></div>
 
-%= include 'dashboard/_nav', page => 'checklists'
+%= include 'dashboard/_nav', page => 'documents'
 
 <a href="<%= $c->url_for( 'show_dashboard_document' ) %>" style="margin-left: 1.5em" class="btn btn-sm btn-outline-secondary float-end">
     <span data-feather="settings"></span>
 </a>
-
-% if ( $c->stash->{checklists} ) {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        % foreach my $checklist ( @{$checklists} ) {
-            <tr>
-                <th><%= $checklist->name %></th>
-                <th><%= $checklist->description %></th>
-                <td>
-                    <form method="post" target="_blank" action="<%= $c->url_for( 'do_checklist_render') %>">
-                        <input type="hidden" name="checklist_id" value="<%= $checklist->id %>">
-
-                        <button style="margin-left: 1.5em" class="btn btn-sm btn-outline-secondary">
-                            <span data-feather="printer"></span>
-                        </button>
-                    </form>
-                </td>
-            </tr>
-        % }
-        </tbody>
-    </table>
-% }
 
 % if ( $c->stash->{documents} ) {
     <table class="table">

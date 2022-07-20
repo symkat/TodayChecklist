@@ -1,9 +1,9 @@
 <!-- BEGIN dashboard/_nav.html.ep -->
 <ul class="nav nav-tabs mt-3 mb-3">
     <li class="nav-item">
-        <a class="nav-link <%= $page eq 'checklists' ? 'active' : '' %>" <%= $page eq 'checklists' ? 'aria-current=page' : '' %> 
+        <a class="nav-link <%= $page eq 'documents' ? 'active' : '' %>" <%= $page eq 'documents' ? 'aria-current=page' : '' %> 
             href="<%= $c->url_for( 'show_dashboard' ) %>">
-            <span data-feather="check-square"></span> My Checklists
+            <span data-feather="align-left"></span> My Documents
         </a>
     </li>
     <li class="nav-item">
