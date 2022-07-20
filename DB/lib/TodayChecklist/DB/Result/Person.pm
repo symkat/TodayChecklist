@@ -156,21 +156,6 @@ __PACKAGE__->has_many(
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
-=head2 checklists
-
-Type: has_many
-
-Related object: L<TodayChecklist::DB::Result::Checklist>
-
-=cut
-
-__PACKAGE__->has_many(
-  "checklists",
-  "TodayChecklist::DB::Result::Checklist",
-  { "foreign.person_id" => "self.id" },
-  { cascade_copy => 0, cascade_delete => 0 },
-);
-
 =head2 documents
 
 Type: has_many
@@ -217,8 +202,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-07-20 02:08:57
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ymPvRftpPIFl+idN8bT6wA
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-07-20 02:39:55
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:pLq8szafeGforB3t2R2iPg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

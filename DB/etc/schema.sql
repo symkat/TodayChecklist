@@ -69,16 +69,6 @@ CREATE TABLE template_var (
     template_var_type_id        int             not null references template_var_type(id)
 );
 
-CREATE TABLE checklist (
-    id                          serial          PRIMARY KEY,
-    person_id                   int             not null references person(id),
-    name                        text            ,
-    description                 text            ,
-    template_id                 int             not null references template(id),
-    payload                     json            not null default '{}',
-    created_at                  timestamptz     not null default current_timestamp
-);
-
 CREATE TABLE document (
     id                          serial          PRIMARY KEY,
     person_id                   int             not null references person(id),

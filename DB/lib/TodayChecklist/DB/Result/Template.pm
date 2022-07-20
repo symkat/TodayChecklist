@@ -119,21 +119,6 @@ __PACKAGE__->set_primary_key("id");
 
 =head1 RELATIONS
 
-=head2 checklists
-
-Type: has_many
-
-Related object: L<TodayChecklist::DB::Result::Checklist>
-
-=cut
-
-__PACKAGE__->has_many(
-  "checklists",
-  "TodayChecklist::DB::Result::Checklist",
-  { "foreign.template_id" => "self.id" },
-  { cascade_copy => 0, cascade_delete => 0 },
-);
-
 =head2 documents
 
 Type: has_many
@@ -180,8 +165,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-07-20 02:08:57
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:xZqnn853SjTRrtGDns7lOQ
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-07-20 02:39:55
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:pdnBeDdsR5bn7hIuVp33qA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
