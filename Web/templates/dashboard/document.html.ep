@@ -1,0 +1,38 @@
+% layout 'user', title => 'Dashboard', sb_active => 'document';
+
+<div class="mt-5 mb-5"></div>
+
+%= include 'dashboard/_nav', page => 'documents'
+
+<a href="<%= $c->url_for( 'show_dashboard' ) %>" style="margin-left: 1.5em" class="btn btn-sm btn-outline-secondary float-end">
+    <span data-feather="skip-back"></span>
+</a>
+
+% if ( $c->stash->{documents} ) {
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            % foreach my $document ( @{$c->stash->{documents}} ) {
+            <tr>
+                <th><%= $document->name %></th>
+                <th><%= $document->description %></th>
+                <td>
+                    <form method="post" action="<%= $c->url_for( 'remove_document', id => $document->id ) %>">
+                        <input type="hidden" name="document_id" value="<%= $document->id %>">
+
+                        <button style="margin-left: 1.5em" class="btn btn-sm btn-outline-danger">
+                            <span data-feather="trash-2"></span>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        % }
+        </tbody>
+    </table>
+% }

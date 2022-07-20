@@ -35,6 +35,12 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link <%= $sb_active eq "document" ? "active" : "" %>" href="<%= $c->url_for( 'show_document_create' ) %>">
+                    <span data-feather="file-plus"></span>
+                    Document
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link <%= $sb_active eq "template" ? "active" : "" %>" href="<%= $c->url_for( 'show_template_create' ) %>">
                     <span data-feather="file-text"></span>
                     Template

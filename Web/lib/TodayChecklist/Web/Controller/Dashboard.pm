@@ -5,6 +5,15 @@ sub index ($c) {
     push @{$c->stash->{checklists}},
         $c->stash->{person}->search_related('checklists')->all;
     
+    push @{$c->stash->{documents}},
+        $c->stash->{person}->search_related('documents')->all;
+    
+}
+
+sub document ($c) { 
+    push @{$c->stash->{documents}},
+        $c->stash->{person}->search_related('documents')->all;
+    
 }
 
 sub checklist ($c) { 

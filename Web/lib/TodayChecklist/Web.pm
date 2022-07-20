@@ -87,7 +87,7 @@ sub startup ($self) {
 
     # User dashboard
     $auth->get( '/dashboard'                   )->to('Dashboard#index'             )->name('show_dashboard'                   );
-    $auth->get( '/dashboard/checklist'         )->to('Dashboard#checklist'         )->name('show_dashboard_checklist'         );
+    $auth->get( '/dashboard/document'          )->to('Dashboard#document'          )->name('show_dashboard_document'          );
     $auth->get( '/dashboard/templates'         )->to('Dashboard#templates'         )->name('show_dashboard_templates'         );
     $auth->get( '/dashboard/templates/edit'    )->to('Dashboard#templates_edit'    )->name('show_dashboard_templates_edit'    );
     $auth->get( '/dashboard/templates/default' )->to('Dashboard#templates_default' )->name('show_dashboard_templates_default' );
@@ -109,6 +109,13 @@ sub startup ($self) {
     $auth->post( '/checklist/:template_id'   )->to('Checklist#do_create'     )->name('do_checklist_create'    );
     $auth->post( '/checklist'                )->to('Checklist#do_render'     )->name('do_checklist_render'    );
     $auth->post( '/checklist/:id/remove'     )->to('Checklist#do_remove'     )->name('remove_checklist'       );
+    
+    # Manage Documents
+    $auth->get ( '/document'                )->to('Document#index'         )->name('show_documents'        );
+    $auth->get ( '/document/:template_id'   )->to('Document#create'        )->name('show_document_create'  );
+    $auth->post( '/document/:template_id'   )->to('Document#do_create'     )->name('do_document_create'    );
+    $auth->post( '/document'                )->to('Document#do_render'     )->name('do_document_render'    );
+    $auth->post( '/document/:id/remove'     )->to('Document#do_remove'     )->name('remove_document'       );
 
 
 }
