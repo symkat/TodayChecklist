@@ -32,7 +32,7 @@ sub vars ($c) {
     my $template = $c->stash->{template_obj} = $c->db->template($id);
 
     push @{$c->stash->{template_vars}}, 
-        $template->search_related( 'template_vars', {} )->all;
+        $template->search_related( 'template_vars', {}, { order_by => qw( weight ) } )->all;
 }
 
 sub do_vars ($c) {
@@ -44,12 +44,14 @@ sub do_vars ($c) {
     push @{$c->stash->{template_vars}}, 
         $template->search_related( 'template_vars', {} )->all;
 
-    my $var_name  = $c->stash->{form_var_name} = $c->param('var_name');
-    my $var_title = $c->stash->{form_var_name} = $c->param('var_title');
-    my $var_desc  = $c->stash->{form_var_desc} = $c->param('var_desc');
-    my $var_type  = $c->stash->{form_var_type} = $c->param('var_type');
+    my $var_name   = $c->stash->{form_var_name}   = $c->param('var_name');
+    my $var_weight = $c->stash->{form_var_weight} = $c->param('var_weight');
+    my $var_title  = $c->stash->{form_var_name}   = $c->param('var_title');
+    my $var_desc   = $c->stash->{form_var_desc}   = $c->param('var_desc');
+    my $var_type   = $c->stash->{form_var_type}   = $c->param('var_type');
 
     push @{$c->stash->{errors}}, "Variable name is required"         unless $var_name;
+    push @{$c->stash->{errors}}, "Variable weight is required"       unless $var_weight;
     push @{$c->stash->{errors}}, "Variable title is required"        unless $var_title;
     push @{$c->stash->{errors}}, "Variable description is required"  unless $var_desc;
     push @{$c->stash->{errors}}, "Variable type is required"         unless $var_type;
@@ -64,6 +66,7 @@ sub do_vars ($c) {
 
     $template->create_related( 'template_vars', {
         name                 => $var_name,
+        weight               => $var_weight,
         title                => $var_title,
         description          => $var_desc,
         template_var_type_id => $type->id,

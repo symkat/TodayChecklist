@@ -11,7 +11,7 @@ sub create ($c) {
     my $template    = $c->stash->{template_obj} = $c->db->template($template_id);
     
     push @{$c->stash->{template_vars}}, 
-        $template->search_related( 'template_vars', {} )->all;
+        $template->search_related( 'template_vars', {}, { order_by => qw( weight ) } )->all;
 }
 
 sub do_create ($c) { 

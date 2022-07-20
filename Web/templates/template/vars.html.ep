@@ -12,6 +12,7 @@
 <table class="table">
     <thead>
         <tr>
+            <th>Weight</th>
             <th>Name</th>
             <th>Title</th>
             <th>Type</th>
@@ -22,6 +23,7 @@
     <tbody>
     % foreach my $var ( @{$template_vars} ) {
         <tr>
+            <th><%= $var->weight %></th>
             <th><%= $var->name %></th>
             <th><%= $var->title %></th>
             <th><%= $var->template_var_type->name %></th>
@@ -52,6 +54,12 @@
         title => 'Variable Name',
         help  => '',
         value => $c->stash->{form_var_name}
+    %>
+    
+    <%= include '_base/form/input', type => 'text', name => 'var_weight',
+        title => 'Variable Weight',
+        help  => '',
+        value => $c->stash->{form_var_weight}
     %>
     
     <%= include '_base/form/input', type => 'text', name => 'var_title',
