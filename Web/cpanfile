@@ -3,6 +3,7 @@ requires 'Mojo::Pg';
 requires 'Mojo::File';
 requires 'DateTime::Format::Pg';
 requires 'Text::CSV';
+requires 'Text::Xslate';
 
 test_requires "Test::More";
 test_requires "Test::Deep";

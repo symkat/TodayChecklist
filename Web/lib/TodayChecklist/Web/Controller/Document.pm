@@ -1,5 +1,11 @@
 package TodayChecklist::Web::Controller::Document;
 use Mojo::Base 'Mojolicious::Controller', -signatures;
+use Text::Xslate;
+
+my $xslate = Text::Xslate->new( 
+    cache  => 0,
+    syntax => 'Metakolon',
+);
 
 sub index ($c) {
     push @{$c->stash->{document_templates}},
@@ -70,10 +76,12 @@ sub do_render ($c) {
         return;
     }
 
-    $c->stash( $document->payload );
+    my $content = $xslate->render_string( $document->template->content, $document->payload );
 
     $c->render(
-        inline => $document->template->content,
+        data   => $content,
+        format => 'html',
+        status => 200,
     );
 }
 
