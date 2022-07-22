@@ -47,6 +47,12 @@
         </h6>
         <ul class="nav flex-column mb-2">
             <li class="nav-item">
+                <a class="nav-link <%= $sb_active eq "subscription" ? "active" : "" %>" href="<%= $c->url_for( 'show_subscription' ) %>">
+                    <span data-feather="credit-card"></span>
+                    Subscription
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link <%= $sb_active eq "profile" ? "active" : "" %>" href="<%= $c->url_for( 'show_profile' ) %>">
                     <span data-feather="user"></span>
                     Profile

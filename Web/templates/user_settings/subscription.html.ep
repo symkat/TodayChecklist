@@ -1,0 +1,73 @@
+% layout 'user', title => 'Subscription', sb_active => 'subscription';
+
+
+% if ( $c->stash->{success} ) {
+    <div style="margin-top: 2em" class="alert alert-success" role="alert">
+    <%= $c->stash->{success_message} %>
+    </div>
+%  }
+
+% if ( $c->stash->{errors} ) {
+    <div style="margin-top: 2em" class="alert alert-danger" role="alert">
+        There were errors with your request that could not be resolved:
+        <ul>
+%      for my $error ( @{$c->stash->{errors}} ) {
+            <li><%= $error %></li>
+%  } 
+        </ul>
+    </div>
+%  }
+        
+<main>
+    % if ( $person->is_subscribed ) {
+        <h2 style="margin-top: 1.5em; margin-bottom: 1.5em" class="h2">You are subscribed to TodayChecklist!</h2>
+    % } else {
+        <h2 style="margin-top: 1.5em; margin-bottom: 1.5em" class="h2">Subscribe for unlimited documents and templates.</h2>
+    % } 
+
+    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+
+        % if ( $person->is_subscribed ) {
+        <div class="col">
+            <div class="card mb-4 rounded-3 shadow-sm border-primary">
+                <div class="card-header py-3 text-white bg-primary border-primary">
+                    <h4 class="my-0 fw-normal">Your Subscription</h4>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>Unlimited Documents</li>
+                        <li>Unlimited Templates</li>
+                    </ul>
+                    <form action="<%= $c->url_for( 'do_subscription_manage') %>" method="POST">
+                        <button id="checkout-and-portal-button" class="button w-100 btn btn-lg btn-primary" type="submit">Manage Subscription</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        % } else {
+        <div class="col">
+            <div class="card mb-4 rounded-3 shadow-sm border-primary">
+                <div class="card-header py-3 text-white bg-primary border-primary">
+                    <h4 class="my-0 fw-normal">Personal</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">$4<small class="text-muted fw-light">/mo</small></h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>Unlimited Documents</li>
+                        <li>Unlimited Templates</li>
+                    </ul>
+                    <p>Personal accounts have unlimited documents and templates.</p>
+                    <form action="<%= $c->url_for( 'do_subscription') %>" method="POST">
+                        <!-- Add a hidden field with the lookup_key of your Price -->
+                        <input type="hidden" name="lookup_key" value="PERSONAL" />
+                        <button id="checkout-and-portal-button" class="button w-100 btn btn-lg btn-primary" type="submit">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        % }
+    </div>
+</main>
+
+

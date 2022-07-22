@@ -81,10 +81,13 @@ sub startup ($self) {
     $r->post( '/reset/:token' )->to('Auth#do_reset'  )->name('do_reset'    );
 
     # User setting changes when logged in
-    $auth->get ( '/profile'  )->to('UserSettings#profile'            )->name('show_profile'         );
-    $auth->post( '/profile'  )->to('UserSettings#do_profile'         )->name('do_profile'           );
-    $auth->get ( '/password' )->to('UserSettings#change_password'    )->name('show_change_password' );
-    $auth->post( '/password' )->to('UserSettings#do_change_password' )->name('do_change_password'   );
+    $auth->get ( '/profile'      )->to('UserSettings#profile'                )->name('show_profile'         );
+    $auth->post( '/profile'      )->to('UserSettings#do_profile'             )->name('do_profile'           );
+    $auth->get ( '/password'     )->to('UserSettings#change_password'        )->name('show_change_password' );
+    $auth->post( '/password'     )->to('UserSettings#do_change_password'     )->name('do_change_password'   );
+    $auth->get ( '/subscription' )->to('UserSettings#subscription'           )->name('show_subscription'    );
+    $auth->post( '/subscription' )->to('UserSettings#do_subscription'        )->name('do_subscription'        );
+    $auth->post( '/manage'       )->to('UserSettings#do_subscription_manage' )->name('do_subscription_manage' );
 
     # Send requests for / to the dashboard.
     #$r->get('/')->to(cb => sub ($c) {
@@ -97,7 +100,7 @@ sub startup ($self) {
     $auth->get( '/dashboard/templates'         )->to('Dashboard#templates'         )->name('show_dashboard_templates'         );
     $auth->get( '/dashboard/templates/edit'    )->to('Dashboard#templates_edit'    )->name('show_dashboard_templates_edit'    );
     $auth->get( '/dashboard/templates/default' )->to('Dashboard#templates_default' )->name('show_dashboard_templates_default' );
-
+    
     # Manage Templates
     $auth->get ( '/template'                 )->to('Template#create'         )->name('show_template_create'     );
     $auth->post( '/template'                 )->to('Template#do_create'      )->name('do_template_create'       );
