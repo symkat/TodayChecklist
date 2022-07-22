@@ -54,6 +54,17 @@ __PACKAGE__->table("person");
   data_type: 'citext'
   is_nullable: 0
 
+=head2 stripe_customer_id
+
+  data_type: 'text'
+  is_nullable: 1
+
+=head2 is_subscribed
+
+  data_type: 'boolean'
+  default_value: false
+  is_nullable: 0
+
 =head2 is_enabled
 
   data_type: 'boolean'
@@ -86,6 +97,10 @@ __PACKAGE__->add_columns(
   { data_type => "text", is_nullable => 0 },
   "email",
   { data_type => "citext", is_nullable => 0 },
+  "stripe_customer_id",
+  { data_type => "text", is_nullable => 1 },
+  "is_subscribed",
+  { data_type => "boolean", default_value => \"false", is_nullable => 0 },
   "is_enabled",
   { data_type => "boolean", default_value => \"true", is_nullable => 0 },
   "is_admin",
@@ -202,8 +217,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-07-20 02:39:55
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:pLq8szafeGforB3t2R2iPg
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-07-22 22:27:30
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ggaWYgwg3DPUmX6IDjvBOg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

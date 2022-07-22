@@ -4,6 +4,8 @@ CREATE TABLE person (
     id                          serial          PRIMARY KEY,
     name                        text            not null,
     email                       citext          not null unique,
+    stripe_customer_id          text            ,
+    is_subscribed               boolean         not null default false,
     is_enabled                  boolean         not null default true,
     is_admin                    boolean         not null default false,
     created_at                  timestamptz     not null default current_timestamp
