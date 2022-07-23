@@ -50,8 +50,11 @@ sub do_register ( $c ) {
     $c->redirect_to( $c->url_for( 'dashboard' ) );
 }
 
-sub show_login ( $c ) {
+sub login ( $c ) {
 
+    if ( $c->stash->{person} ) {
+        $c->redirect_to( $c->url_for( 'show_dashboard' ) );
+    }
 }
 
 sub do_login ( $c ) {
