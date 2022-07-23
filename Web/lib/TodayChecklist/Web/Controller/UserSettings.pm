@@ -93,6 +93,7 @@ sub subscription ($c) {
 
     # Status isn't successful, tell the user they could try agan.
     if ( $status ne 'success' ) {
+        push @{$c->stash->{errors}}, "Subscription wasn't successful.";
         return;
     }
 
@@ -108,6 +109,11 @@ sub subscription ($c) {
             $c->stash->{person}->update;
         });
     }
+        
+    $c->stash( 
+        success         => 1, 
+        success_message => 'Thank you for signing up!',
+    );
 }
 
 # Send to stripe to signup for the subscription
