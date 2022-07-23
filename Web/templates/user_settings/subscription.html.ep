@@ -1,6 +1,5 @@
 % layout 'user', title => 'Subscription', sb_active => 'subscription';
 
-
 % if ( $c->stash->{success} ) {
     <div style="margin-top: 2em" class="alert alert-success" role="alert">
     <%= $c->stash->{success_message} %>
@@ -29,20 +28,9 @@
 
         % if ( $person->is_subscribed ) {
         <div class="col">
-            <div class="card mb-4 rounded-3 shadow-sm border-primary">
-                <div class="card-header py-3 text-white bg-primary border-primary">
-                    <h4 class="my-0 fw-normal">Your Subscription</h4>
-                </div>
-                <div class="card-body">
-                    <ul class="list-unstyled mt-3 mb-4">
-                        <li>Unlimited Documents</li>
-                        <li>Unlimited Templates</li>
-                    </ul>
-                    <form action="<%= $c->url_for( 'do_subscription_manage') %>" method="POST">
-                        <button id="checkout-and-portal-button" class="button w-100 btn btn-lg btn-primary" type="submit">Manage Subscription</button>
-                    </form>
-                </div>
-            </div>
+            <form action="<%= $c->url_for( 'do_subscription_manage') %>" method="POST">
+                <button id="checkout-and-portal-button" class="button w-100 btn btn-lg btn-primary" type="submit">Manage Subscription</button>
+            </form>
         </div>
         % } else {
         <div class="col">
@@ -69,5 +57,3 @@
         % }
     </div>
 </main>
-
-
