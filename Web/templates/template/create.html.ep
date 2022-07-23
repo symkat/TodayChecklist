@@ -20,7 +20,8 @@
 
     <div class="mb-3">
         <label for="tmpl" class="form-label">HTML Template Content</label>
-        <textarea name="tmpl" class="form-control" id="tmpl" rows="5"><%= $c->stash->{html_tmpl} %></textarea>
+        <textarea name="tmpl" class="form-control" id="tmpl" rows="15"><%= $c->stash->{html_tmpl} %></textarea>
+        <p>Templates should be HTML pages.  See the <a target="_blank" href="https://metacpan.org/pod/Text::Xslate::Syntax::Kolon#SYNTAX">template syntax documentation</a> for information on accessing variables in the template.  On the next page you will have the oppertunity to add variables.</p>
     </div>
     
     <div class="mb-3">
