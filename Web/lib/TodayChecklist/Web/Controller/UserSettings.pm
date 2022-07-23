@@ -98,7 +98,7 @@ sub subscription ($c) {
 
     my $session_id = $c->param('session_id');
 
-    my $customer_id = $c->ua->get( $c->config->{stripe_domain} . '/stripe/session-to-customer?session_id=' . $session_id )->result->json->{customer_id};
+    my $customer_id = $c->ua->get( $c->config->{stripe_backend} . '/stripe/session-to-customer?session_id=' . $session_id )->result->json->{customer_id};
 
     # Store the customer id along side the user in the DB.
     if ( $customer_id ) {
@@ -113,14 +113,14 @@ sub subscription ($c) {
 # Send to stripe to signup for the subscription
 sub do_subscription ($c) {
     my $lookup_key = $c->param('lookup_key');
-    my $url = $c->ua->get( $c->config->{stripe_domain} . '/stripe/get-checkout-link?lookup_key=' . $lookup_key )->result->json->{url};
+    my $url = $c->ua->get( $c->config->{stripe_backend} . '/stripe/get-checkout-link?lookup_key=' . $lookup_key )->result->json->{url};
 
     $c->redirect_to( $url );
 }
 
 # Send to stripe to manage the subscription
 sub do_subscription_manage ($c) {
-    my $url = $c->ua->get( $c->config->{stripe_domain} . '/stripe/get-portal-link?customer_id=' . $c->stash->{person}->stripe_customer_id )->result->json->{url};
+    my $url = $c->ua->get( $c->config->{stripe_backend} . '/stripe/get-portal-link?customer_id=' . $c->stash->{person}->stripe_customer_id )->result->json->{url};
 
     $c->redirect_to( $url );
 }

@@ -24,6 +24,10 @@
       'certbot',
       'curl',
       'python3-certbot-nginx',
+      'python3-pip',
+      'gunicorn',
+      'ack',
+      'tree',
     ]
     state: present
 
@@ -212,9 +216,31 @@
     group: root
     mode: 0644
 
+- name: Install stripe-backend.service file.
+  copy:
+    dest: /etc/systemd/system/stripe-backend.service
+    src: "{{ role_path }}/files/stripe-backend.service"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Install Python Packages 
+  shell: pip3 install "{{ item }}"
+  become: true
+  become_user: manager
+  with_items:
+    - "flask"
+    - "stripe"
+
 - name: Start TodayChecklist
   service:
     name: todaychecklist
+    state: restarted
+    enabled: true
+
+- name: Start Stripe Backend
+  service:
+    name: stripe-backend
     state: restarted
     enabled: true
 
