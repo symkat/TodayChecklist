@@ -11,6 +11,12 @@ sub do_create ($c) {
     my $name = $c->stash->{form_name} = $c->param('name');
     my $desc = $c->stash->{form_desc} = $c->param('desc');
     my $html = $c->stash->{form_tmpl} = $c->param('tmpl');
+    
+    if ( ! $c->stash->{person}->is_subscribed ) {
+        if ( $c->stash->{person}->search_related( 'templates', {} )->count >= 5 ) {
+            push @{$c->stash->{errors}}, "You must subscribe to save more than 5 templates.";
+        }
+    }
 
     push @{$c->stash->{errors}}, "Template name is required"         unless $name;
     push @{$c->stash->{errors}}, "Template description is required"  unless $desc;

@@ -34,6 +34,12 @@ sub do_create ($c) {
 
     my $payload = {};
 
+    if ( ! $c->stash->{person}->is_subscribed ) {
+        if ( $c->stash->{person}->search_related( 'documents', {} )->count >= 7 ) {
+            push @{$c->stash->{errors}}, "You must subscribe to save more than 7 documents.";
+        }
+    }
+
     foreach my $var (  @{$c->stash->{template_vars}} ) {
         if ( ! $c->param( $var->name ) ) {
             push @{$c->stash->{errors}}, "The form field for " . $var->name . " is required.";
