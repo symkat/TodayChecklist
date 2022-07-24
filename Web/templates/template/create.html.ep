@@ -1,5 +1,12 @@
 % layout 'user', title => 'Create Template', sb_active => 'template';
 
+% if ( $c->stash->{exceed_free_warning} ) {
+    <div style="margin-top: 2em" class="alert alert-warning" role="alert">
+        <p><strong>Hi,</strong> it looks like you have created 5 or more templates and are using a free account.</p>
+        <p>If you'd like to make another one, first you'll need to either <a href="<%= $c->url_for( 'show_dashboard_templates_edit' ) %>">remove a templates you have</a> or <a href="<%= $c->url_for( 'show_subscription' ) %>">subscribe to the personal account for unlimited templates</a>.</p>
+    </div>
+%  }
+
 <h3 class="h3 mt-5 mb-3">Create Template</h3>
 
 %= include '_base/error_window'

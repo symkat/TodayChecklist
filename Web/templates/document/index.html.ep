@@ -1,5 +1,12 @@
 % layout 'user', title => 'Create Document', sb_active => 'document';
 
+% if ( $c->stash->{exceed_free_warning} ) {
+    <div style="margin-top: 2em" class="alert alert-warning" role="alert">
+        <p><strong>Hi,</strong> it looks like you have created 7 or more documents and are using a free account.</p>
+        <p>If you'd like to make another one, first you'll need to either <a href="<%= $c->url_for( 'show_dashboard_document' ) %>">delete a document you have</a> or <a href="<%= $c->url_for( 'show_subscription' ) %>">subscribe to the personal account for unlimited documents</a>.</p>
+    </div>
+%  }
+
 <h3 class="h3 mt-5 mb-3">Choose Document Template</h3>
 
 <div class="row row-cols-1 row-cols-md-3 g-4">

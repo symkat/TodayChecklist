@@ -10,6 +10,14 @@ my $xslate = Text::Xslate->new(
 sub index ($c) {
     push @{$c->stash->{document_templates}},
         $c->stash->{person}->search_related( 'templates' )->all;
+
+    # Enable a warning to be displayed that the documents will not save if a free account
+    # exceeds the 7 documents allowed.
+    if ( ! $c->stash->{person}->is_subscribed ) {
+        if ( $c->stash->{person}->search_related('documents', {})->count >= 7 ) {
+            $c->stash->{exceed_free_warning} = 1;
+        }
+    }
 }
 
 sub create ($c) { 
@@ -36,7 +44,7 @@ sub do_create ($c) {
 
     if ( ! $c->stash->{person}->is_subscribed ) {
         if ( $c->stash->{person}->search_related( 'documents', {} )->count >= 7 ) {
-            push @{$c->stash->{errors}}, "You must subscribe to save more than 7 documents.";
+            push @{$c->stash->{errors}}, "You have exceeded the document allowance for a free account.";
         }
     }
 

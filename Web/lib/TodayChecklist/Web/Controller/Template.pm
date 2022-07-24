@@ -2,7 +2,13 @@ package TodayChecklist::Web::Controller::Template;
 use Mojo::Base 'Mojolicious::Controller', -signatures;
 
 sub create ($c) { 
- 
+    # Enable a warning to be displayed that the documents will not save if a free account
+    # exceeds the 5 templates allowed.
+    if ( ! $c->stash->{person}->is_subscribed ) {
+        if ( $c->stash->{person}->search_related('templates', {})->count >= 5 ) {
+            $c->stash->{exceed_free_warning} = 1;
+        }
+    }
 }
 
 sub do_create ($c) {
@@ -21,6 +27,12 @@ sub do_create ($c) {
     push @{$c->stash->{errors}}, "Template name is required"         unless $name;
     push @{$c->stash->{errors}}, "Template description is required"  unless $desc;
     push @{$c->stash->{errors}}, "Template html content is required" unless $html;
+
+    if ( ! $c->stash->{person}->is_subscribed ) {
+        if ( $c->stash->{person}->search_related('templates', {})->count >= 5 ) {
+            push @{$c->stash->{errors}}, "You have exceeded the template allowance for a free account."
+        }
+    }
 
     return if $c->stash->{errors};
 
