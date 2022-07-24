@@ -116,6 +116,8 @@ sub startup ($self) {
     $auth->get ( '/document'                )->to('Document#index'         )->name('show_documents'        );
     $auth->get ( '/document/:template_id'   )->to('Document#create'        )->name('show_document_create'  );
     $auth->post( '/document/:template_id'   )->to('Document#do_create'     )->name('do_document_create'    );
+    $auth->get ( '/document/:id/edit'       )->to('Document#editor'        )->name('show_document_editor'  );
+    $auth->post( '/document/:id/edit'       )->to('Document#do_editor'     )->name('do_document_editor'    );
     $auth->post( '/document'                )->to('Document#do_render'     )->name('do_document_render'    );
     $auth->post( '/document/:id/remove'     )->to('Document#do_remove'     )->name('remove_document'       );
 

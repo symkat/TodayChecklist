@@ -20,6 +20,81 @@ sub index ($c) {
     }
 }
 
+# Given a document id, bring the user to the editor with things filled in.
+sub editor ($c) {
+    my $id       = $c->param('id');
+    my $document = $c->db->document($id);
+
+    if ( $c->stash->{person}->id ne $document->person_id ) {
+        $c->render(
+            text   => "Access denied",
+            status => 403,
+        );
+        return;
+    }
+
+    my $template_id = $document->template_id;
+    my $template    = $c->stash->{template_obj} = $c->db->template($template_id);
+    
+    my $vars = $template->search_related( 'template_vars', {}, { order_by => qw( weight ) } );
+
+    while ( my $var = $vars->next ) {
+        push @{$c->stash->{template_vars}}, $var;
+        if ( ref $document->payload->{$var->name} eq 'ARRAY' ) {
+            $c->stash->{'form_' . $var->name} = join "\n", @{$document->payload->{$var->name}};
+        } else {
+            $c->stash->{'form_' . $var->name} = $document->payload->{$var->name};
+        }
+    }
+}
+
+# TODO
+# Update a document.
+sub do_editor ($c) {
+    $c->stash->{template} = 'document/editor';
+
+    my $id       = $c->param('id');
+    my $document = $c->db->document($id);
+
+    if ( $c->stash->{person}->id ne $document->person_id ) {
+        $c->render(
+            text   => "Access denied",
+            status => 403,
+        );
+        return;
+    }
+
+    my $template_id = $document->template_id;
+    my $template    = $c->stash->{template_obj} = $c->db->template($template_id);
+    
+    push @{$c->stash->{template_vars}}, 
+        $template->search_related( 'template_vars', {}, { order_by => qw( weight ) } )->all;
+    
+    my $payload = {};
+
+    foreach my $var (  @{$c->stash->{template_vars}} ) {
+        if ( ! $c->param( $var->name ) ) {
+            push @{$c->stash->{errors}}, "The form field for " . $var->name . " is required.";
+        }
+
+        if ( $var->template_var_type->name eq 'array' ) {
+            push @{$payload->{$var->name}}, split( /\n/, $c->param($var->name) );
+        } else {
+            $payload->{$var->name} = $c->param($var->name);
+        }
+
+       $c->stash->{'form_' . $var->name} = $c->param($var->name);
+    }
+    
+    return if $c->stash->{errors};
+
+    $document->payload( $payload );
+    $document->update;
+    
+    $c->redirect_to( $c->url_for( 'show_dashboard' ) );
+
+}
+
 sub create ($c) { 
     my $template_id = $c->param('template_id');
     my $template    = $c->stash->{template_obj} = $c->db->template($template_id);

@@ -1,0 +1,50 @@
+% layout 'user', title => 'Create Document', sb_active => 'document';
+
+<h3 class="h3 mt-5 mb-3">Update Document</h3>
+
+%= include '_base/error_window'
+
+<form method="POST" action="<%= $c->url_for( 'do_document_editor' ) %>">
+    <p><strong>Form fields for this document's template</strong></p>
+    % for my $elem ( @{$template_vars} ) {
+        % if ( $elem->template_var_type->name eq 'text' ) {
+            <%= include '_base/form/input', type => 'text', name => $elem->name,
+                title => $elem->description,
+                help  => '',
+                value => $c->stash->{'form_' . $elem->name}
+            %>
+
+        % } elsif ( $elem->template_var_type->name eq 'textbox' ) {
+            <div class="mb-3">
+                <label for="<%= $elem->name %>" class="form-label"><%= $elem->title %> - <span class="text-muted"><%= $elem->description %></span></label>
+                <textarea name="<%= $elem->name %>" class="form-control" id="tmpl" rows="5"><%= $c->stash->{'form_' . $elem->name} %></textarea>
+            </div>
+
+        % } elsif ( $elem->template_var_type->name eq 'array' ) {
+            <div class="mb-3">
+                <label for="<%= $elem->name %>" class="form-label"><%= $elem->title %> - <span class="text-muted"><%= $elem->description %></span></label>
+                <textarea name="<%= $elem->name %>" class="form-control" id="tmpl" rows="5"><%= $c->stash->{'form_' . $elem->name} %></textarea>
+            </div>
+
+        % } elsif ( $elem->template_var_type->name eq 'date' ) {
+            <div class="mb-3">
+                <label for="<%= $elem->name %>" class="form-label"><%= $elem->title %> - <span class="text-muted"><%= $elem->description %></span></label>
+                <input name="<%= $elem->name %>" type="text" class="form-control date-selector" aria-label="Date" value="<%= $c->stash->{'form_' . $elem->name} %>">
+            </div>
+
+        % } else {
+            <p>Error... unknown type....</p>
+        % }
+    % }
+
+    <hr style="margin-top: 1em" />
+
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary float-end">Update</button>
+    </div>
+</form>
+
+<script type="text/javascript">
+    $('.date-selector').datepicker({});
+</script>
+
