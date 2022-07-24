@@ -7,12 +7,20 @@
                     <span data-feather="home"></span>
                     Dashboard
                 </a>
-                % if ( $person->is_admin ) {
-                    <a class="nav-link <%= $sb_active eq "pricing" ? "active" : "" %>"  aria-current="page" href="<%= $c->url_for( 'show_admin_pricing' ) %>">
-                        <span data-feather="trending-up"></span>
-                        Manage Pricing
-                    </a>
-                % } 
+            </li>
+        </ul>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link <%= $sb_active eq "about" ? "active" : "" %>"  aria-current="page" href="<%= $c->url_for( 'show_about' ) %>">
+                    <span data-feather="info"></span>
+                    About
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link <%= $sb_active eq "contact" ? "active" : "" %>"  aria-current="page" href="<%= $c->url_for( 'show_contact' ) %>">
+                    <span data-feather="mail"></span>
+                    Contact
+                </a>
             </li>
         </ul>
 
@@ -20,14 +28,6 @@
             <span>Create New</span>
         </h6>
         <ul class="nav flex-column mb-2">
-            % if ( $person->is_admin ) {
-                <li class="nav-item">
-                    <a class="nav-link <%= $sb_active eq "treatment" ? "active" : "" %>" href="<%= $c->url_for( 'show_treatment_create' ) %>">
-                        <span data-feather="zap"></span>
-                        Treatment
-                    </a>
-                </li>
-            % }
             <li class="nav-item">
                 <a class="nav-link <%= $sb_active eq "document" ? "active" : "" %>" href="<%= $c->url_for( 'show_documents' ) %>">
                     <span data-feather="file-plus"></span>

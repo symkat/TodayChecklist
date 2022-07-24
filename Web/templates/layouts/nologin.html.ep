@@ -14,33 +14,54 @@
             aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+        % if ( $c->stash->{person} ) {
+        <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap"><a class="nav-link" href="<%= $c->url_for('do_logout') %>">Sign out</a></li>
+        </ul>
+        % } else {
         <ul class="navbar-nav px-3">
             <li class="nav-item text-nowrap"><a class="nav-link" href="<%= $c->url_for('show_login') %>">Login</a></li>
         </ul>
+        % }
     </header>
     <div class="container-fluid">
         <div class="row">
             <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
                 <div class="position-sticky pt-3">
+                    % if ( $c->stash->{person} ) {
                     <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link <%= $sb_active eq "dashboard" ? "active" : "" %>"  aria-current="page" href="<%= $c->url_for( 'show_dashboard' ) %>">
+                                <span data-feather="home"></span>
+                                Dashboard
+                            </a>
+                        </li>
+                    </ul>
+                    % }
+
+                    <ul class="nav flex-column">
+                        % if ( ! $c->stash->{person} ) {
                         <li class="nav-item">
                             <a class="nav-link <%= $sb_active eq "home" ? "active" : "" %>"  aria-current="page" href="<%= $c->url_for( 'show_homepage' ) %>">
                                 <span data-feather="home"></span>
                                 Home
                             </a>
                         </li>
+                        % }
                         <li class="nav-item">
                             <a class="nav-link <%= $sb_active eq "about" ? "active" : "" %>"  aria-current="page" href="<%= $c->url_for( 'show_about' ) %>">
                                 <span data-feather="info"></span>
                                 About
                             </a>
                         </li>
+                        % if ( ! $c->stash->{person} ) {
                         <li class="nav-item">
                             <a class="nav-link <%= $sb_active eq "pricing" ? "active" : "" %>"  aria-current="page" href="<%= $c->url_for( 'show_pricing' ) %>">
                                 <span data-feather="dollar-sign"></span>
                                 Pricing
                             </a>
                         </li>
+                        % }
                         <li class="nav-item">
                             <a class="nav-link <%= $sb_active eq "contact" ? "active" : "" %>"  aria-current="page" href="<%= $c->url_for( 'show_contact' ) %>">
                                 <span data-feather="mail"></span>
@@ -49,6 +70,51 @@
                         </li>
                     </ul>
 
+                    % if ( $c->stash->{person} ) {
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                        <span>Create New</span>
+                    </h6>
+                    <ul class="nav flex-column mb-2">
+                        <li class="nav-item">
+                            <a class="nav-link <%= $sb_active eq "document" ? "active" : "" %>" href="<%= $c->url_for( 'show_documents' ) %>">
+                                <span data-feather="file-plus"></span>
+                                Document
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <%= $sb_active eq "template" ? "active" : "" %>" href="<%= $c->url_for( 'show_template_create' ) %>">
+                                <span data-feather="file-text"></span>
+                                Template
+                            </a>
+                        </li>
+                    </ul>
+                    % }
+
+                    % if ( $c->stash->{person} ) {
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                        <span>My Info</span>
+                    </h6>
+                    <ul class="nav flex-column mb-2">
+                        <li class="nav-item">
+                            <a class="nav-link <%= $sb_active eq "subscription" ? "active" : "" %>" href="<%= $c->url_for( 'show_subscription' ) %>">
+                                <span data-feather="credit-card"></span>
+                                Subscription
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <%= $sb_active eq "profile" ? "active" : "" %>" href="<%= $c->url_for( 'show_profile' ) %>">
+                                <span data-feather="user"></span>
+                                Profile
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <%= $sb_active eq "password" ? "active" : "" %>" href="<%= $c->url_for( 'show_change_password' ) %>">
+                                <span data-feather="lock"></span>
+                                Change Password
+                            </a>
+                        </li>
+                    </ul>
+                    % } else { 
                     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
                         <span>Your Account</span>
                     </h6>
@@ -72,6 +138,7 @@
                             </a>
                         </li>
                     </ul>
+                    % }
                 </div>
             </nav>
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
