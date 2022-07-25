@@ -25,6 +25,11 @@
                 <label for="<%= $elem->name %>" class="form-label"><%= $elem->title %> - <span class="text-muted"><%= $elem->description %></span></label>
                 <textarea name="<%= $elem->name %>" class="form-control" id="tmpl" rows="5"><%= $c->stash->{'form_' . $elem->name} %></textarea>
             </div>
+        % } elsif ( $elem->template_var_type->name eq 'nested_checklist' ) {
+            <div class="mb-3">
+                <label for="<%= $elem->name %>" class="form-label"><%= $elem->title %> - <span class="text-muted"><%= $elem->description %></span></label>
+                <textarea name="<%= $elem->name %>" class="form-control" id="tmpl" rows="10"><%= $c->stash->{'form_' . $elem->name} %></textarea>
+            </div>
 
         % } elsif ( $elem->template_var_type->name eq 'date' ) {
             <div class="mb-3">

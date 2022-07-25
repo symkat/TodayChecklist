@@ -42,6 +42,8 @@ sub editor ($c) {
         push @{$c->stash->{template_vars}}, $var;
         if ( ref $document->payload->{$var->name} eq 'ARRAY' ) {
             $c->stash->{'form_' . $var->name} = join "\n", @{$document->payload->{$var->name}};
+        } elsif ( ref $document->payload->{$var->name} eq 'HASH' ) {
+            $c->stash->{'form_' . $var->name} = unprocess_nested_checklist( $document->payload->{$var->name} );
         } else {
             $c->stash->{'form_' . $var->name} = $document->payload->{$var->name};
         }
@@ -79,6 +81,8 @@ sub do_editor ($c) {
 
         if ( $var->template_var_type->name eq 'array' ) {
             push @{$payload->{$var->name}}, split( /\n/, $c->param($var->name) );
+        } elsif ( $var->template_var_type->name eq 'nested_checklist' ) {
+            $payload->{$var->name} = process_nested_checklist( $c->param($var->name) );
         } else {
             $payload->{$var->name} = $c->param($var->name);
         }
@@ -130,6 +134,8 @@ sub do_create ($c) {
 
         if ( $var->template_var_type->name eq 'array' ) {
             push @{$payload->{$var->name}}, split( /\n/, $c->param($var->name) );
+        } elsif ( $var->template_var_type->name eq 'nested_checklist' ) {
+            $payload->{$var->name} = process_nested_checklist( $c->param($var->name) );
         } else {
             $payload->{$var->name} = $c->param($var->name);
         }
@@ -190,6 +196,40 @@ sub do_remove ($c) {
 
     $c->redirect_to( $c->url_for( 'show_dashboard_document' ) );
 
+}
+
+sub process_nested_checklist ($content) {
+
+    my $result  = {};
+    my $section = "";
+    my @section_order;
+    foreach my $line ( split( /\r\n/, $content ) ) {
+        if ( $line =~ /:$/ ) {
+            $section = $line;
+            push @section_order, $section;
+            next;
+        }
+
+        push @{$result->{$section}}, $line;
+    }
+
+    return { order => [ @section_order ], data => $result };
+}
+
+sub unprocess_nested_checklist ($var) {
+    my $content;
+
+    if ( $var->{data}->{""} ) {
+        $content = join( "\r\n", @{$var->{data}->{""}} );
+    }
+
+    foreach my $section ( @{$var->{order}} ) {
+        $content .= "$section\r\n";
+        $content .= join( "\r\n", @{$var->{data}->{$section}} );
+        $content .= "\r\n";
+    }
+
+    return $content;
 }
 
 1;

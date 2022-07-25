@@ -56,10 +56,11 @@ CREATE TABLE template_var_type (
     name                        text            not null
 );
 
-INSERT INTO template_var_type ( name ) VALUES ( 'text'    );
-INSERT INTO template_var_type ( name ) VALUES ( 'textbox' );
-INSERT INTO template_var_type ( name ) VALUES ( 'array'   );
-INSERT INTO template_var_type ( name ) VALUES ( 'date'    );
+INSERT INTO template_var_type ( name ) VALUES ( 'text'             );
+INSERT INTO template_var_type ( name ) VALUES ( 'textbox'          );
+INSERT INTO template_var_type ( name ) VALUES ( 'array'            );
+INSERT INTO template_var_type ( name ) VALUES ( 'date'             );
+INSERT INTO template_var_type ( name ) VALUES ( 'nested_checklist' );
 
 CREATE TABLE template_var (
     id                          serial          PRIMARY KEY,
