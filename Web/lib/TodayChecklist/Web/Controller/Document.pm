@@ -5,6 +5,13 @@ use Text::Xslate;
 my $xslate = Text::Xslate->new( 
     cache  => 0,
     syntax => 'Metakolon',
+    function => {
+        strip_colon => sub {
+            my $string = shift;
+            $string =~ s/:$//;
+            return $string;
+        },
+    },
 );
 
 sub index ($c) {
