@@ -64,7 +64,7 @@ sub do_vars ($c) {
 
     my $var_name   = $c->stash->{form_var_name}   = $c->param('var_name');
     my $var_weight = $c->stash->{form_var_weight} = $c->param('var_weight');
-    my $var_title  = $c->stash->{form_var_name}   = $c->param('var_title');
+    my $var_title  = $c->stash->{form_var_title}  = $c->param('var_title');
     my $var_desc   = $c->stash->{form_var_desc}   = $c->param('var_desc');
     my $var_type   = $c->stash->{form_var_type}   = $c->param('var_type');
 
