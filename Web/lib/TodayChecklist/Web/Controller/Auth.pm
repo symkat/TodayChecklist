@@ -150,6 +150,7 @@ sub do_reset ( $c ) {
 
     my $record = $c->db->auth_tokens->search( {
         token      => $token,
+        scope      => 'forgot',
         'me.created_at' => { '>=', $lower_time },
     }, { prefetch => 'person'  })->first;
 
