@@ -44,22 +44,8 @@
 
     <hr style="margin-top: 1em" />
 
-    <p><strong>Details for saving this document</strong></p>
-
-    <%= include '_base/form/input', type => 'text', name => 'document_name',
-        title => 'Name for this document',
-        help  => '',
-        value => $c->stash->{'form_document_name'}
-    %>
-    
-    <%= include '_base/form/input', type => 'text', name => 'document_desc',
-        title => 'Description for this document',
-        help  => '',
-        value => $c->stash->{'form_document_desc'}
-    %>
-
     <div class="mb-3">
-        <button type="submit" class="btn btn-primary float-end">Save</button>
+        <button type="submit" class="btn btn-primary float-end">Save &amp; Print</button>
     </div>
 </form>
 

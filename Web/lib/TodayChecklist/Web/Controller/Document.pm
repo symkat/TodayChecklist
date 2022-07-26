@@ -15,6 +15,13 @@ my $xslate = Text::Xslate->new(
 );
 
 sub index ($c) {
+    # If this person does not have any templates, send them to the template dashboard
+    # to be instructed to copy a template.
+    if ( $c->stash->{person}->search_related('templates', {})->count == 0 ) {
+        $c->redirect_to( $c->url_for( 'show_dashboard_templates_default' ) );
+        return;
+    }
+
     push @{$c->stash->{document_templates}},
         $c->stash->{person}->search_related( 'templates' )->all;
 
@@ -120,9 +127,6 @@ sub do_create ($c) {
     my $template_id = $c->param('template_id');
     my $template    = $c->stash->{template_obj} = $c->db->template($template_id);
 
-    my $name        = $c->stash->{form_document_name} = $c->param( 'document_name' );
-    my $desc        = $c->stash->{form_document_desc} = $c->param( 'document_desc' );
-    
     push @{$c->stash->{template_vars}}, 
         $template->search_related( 'template_vars', {} )->all;
 
@@ -150,21 +154,54 @@ sub do_create ($c) {
        $c->stash->{'form_' . $var->name} = $c->param($var->name);
     }
 
-
-    push @{$c->stash->{errors}}, "Document name is required."        unless $name;
-    push @{$c->stash->{errors}}, "Document description is required." unless $desc;
-
     return if $c->stash->{errors};
 
-    $c->stash->{person}->create_related( 'documents', {
-        name        => $name,
-        description => $desc,
+    my $document = $c->stash->{person}->create_related( 'documents', {
         template_id => $template_id,
         payload     => $payload,
     });
 
+    $c->redirect_to( $c->url_for( 'show_document_name', { id => $document->id } ) );
+}
+
+sub name ($c) {
+    my $id       = $c->stash->{id}       = $c->param('id');
+    my $document = $c->stash->{document} = $c->db->document($id);
+
+    if ( $c->stash->{person}->id ne $document->person_id ) {
+        $c->render(
+            text   => "Access denied",
+            status => 403,
+        );
+        return;
+    }
+}
+
+sub do_name ($c) {
+    my $id       = $c->param('id');
+    my $document = $c->db->document($id);
+
+    if ( $c->stash->{person}->id ne $document->person_id ) {
+        $c->render(
+            text   => "Access denied",
+            status => 403,
+        );
+        return;
+    }
+    
+    my $name = $c->stash->{form_document_name} = $c->param( 'document_name' );
+    
+    push @{$c->stash->{errors}}, "Document name is required."
+        unless $name;
+
+    return if $c->stash->{errors};
+
+    $document->name( $name );
+    $document->update;
+
     $c->redirect_to( $c->url_for( 'show_dashboard' ) );
 }
+
 
 sub do_render ($c) {
     my $document_id = $c->param('document_id');

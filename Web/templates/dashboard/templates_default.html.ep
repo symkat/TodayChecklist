@@ -1,6 +1,12 @@
 % layout 'user', title => 'Dashboard', sb_active => 'dashboard';
 
-<div class="mt-5 mb-5"></div>
+% if ( $c->stash->{guide_no_templates} ) {
+    <div style="margin-top: 2em;" class="alert alert-info" role="alert">
+        <p>Welcome to TodayChecklist!</p>
+        <p style="font-weight: bold">You don't have any templates yet, so it's a good idea to make a copy of one.</p>
+        <p>Below you'll find templates you can copy to get started.  Once you've copied a template, you can make a document from it.</p>
+    </div>
+%  }
 
 %= include 'dashboard/_nav', page => 'templates_default'
 

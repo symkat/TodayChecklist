@@ -41,4 +41,10 @@
         % }
         </tbody>
     </table>
+% } else {
+    <div style="margin-top: 2em;" class="alert alert-info" role="alert">
+        <p style="font-weight: bold">You don't have any documents yet, you can create one by clicking 
+            <a href="<%= $c->url_for( 'show_document_create' ) %>"><span data-feather="file-plus"></span>Document</a> here or on the left side bar.
+        </p>
+    </div>
 % }
