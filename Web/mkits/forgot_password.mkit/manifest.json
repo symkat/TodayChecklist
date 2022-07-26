@@ -1,0 +1,18 @@
+{
+    "renderer": "TT",
+    "header": [
+        { "To"      : "[% send_to %]" },
+        { "From"    : "TodayChecklist Robot <mailbot@todaychecklist.com>" },
+        { "Subject" : "Password reset link for your TodayChecklist account" }
+    ],
+    "alternatives": [
+        {
+            "type": "text/plain",
+            "path": "body.txt"
+        },
+        {
+            "type": "text/html",
+            "path": "body.html"
+        }
+    ]
+}
