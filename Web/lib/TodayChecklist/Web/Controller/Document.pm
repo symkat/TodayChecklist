@@ -39,7 +39,7 @@ sub editor ($c) {
     my $id       = $c->param('id');
     my $document = $c->db->document($id);
 
-    if ( $c->stash->{person}->id ne $document->person_id ) {
+    if ( $c->stash->{person}->id != $document->person_id ) {
         $c->render(
             text   => "Access denied",
             status => 403,
@@ -64,7 +64,6 @@ sub editor ($c) {
     }
 }
 
-# TODO
 # Update a document.
 sub do_editor ($c) {
     $c->stash->{template} = 'document/editor';
@@ -72,7 +71,7 @@ sub do_editor ($c) {
     my $id       = $c->param('id');
     my $document = $c->db->document($id);
 
-    if ( $c->stash->{person}->id ne $document->person_id ) {
+    if ( $c->stash->{person}->id != $document->person_id ) {
         $c->render(
             text   => "Access denied",
             status => 403,
@@ -168,7 +167,7 @@ sub name ($c) {
     my $id       = $c->stash->{id}       = $c->param('id');
     my $document = $c->stash->{document} = $c->db->document($id);
 
-    if ( $c->stash->{person}->id ne $document->person_id ) {
+    if ( $c->stash->{person}->id != $document->person_id ) {
         $c->render(
             text   => "Access denied",
             status => 403,
@@ -181,7 +180,7 @@ sub do_name ($c) {
     my $id       = $c->param('id');
     my $document = $c->db->document($id);
 
-    if ( $c->stash->{person}->id ne $document->person_id ) {
+    if ( $c->stash->{person}->id != $document->person_id ) {
         $c->render(
             text   => "Access denied",
             status => 403,
@@ -207,7 +206,7 @@ sub do_render ($c) {
     my $document_id = $c->param('document_id');
     my $document    = $c->stash->{document} = $c->db->document($document_id);
 
-    if ( $c->stash->{person}->id ne $document->person_id ) {
+    if ( $c->stash->{person}->id != $document->person_id ) {
         $c->render(
             text   => "Access denied",
             status => 403,
@@ -228,7 +227,7 @@ sub do_remove ($c) {
     my $document_id = $c->param('id');
     my $document    = $c->stash->{document} = $c->db->document($document_id);
     
-    if ( $c->stash->{person}->id ne $document->person_id ) {
+    if ( $c->stash->{person}->id != $document->person_id ) {
         $c->render(
             text   => "Access denied",
             status => 403,

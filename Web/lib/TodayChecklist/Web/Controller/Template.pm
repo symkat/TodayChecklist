@@ -48,6 +48,14 @@ sub do_create ($c) {
 sub vars ($c) { 
     my $id       = $c->stash->{template_id}  = $c->param('id');
     my $template = $c->stash->{template_obj} = $c->db->template($id);
+    
+    if ( $c->stash->{person}->id != $template->person_id ) {
+        $c->render(
+            text   => "Access denied",
+            status => 403,
+        );
+        return;
+    }
 
     push @{$c->stash->{template_vars}}, 
         $template->search_related( 'template_vars', {}, { order_by => qw( weight ) } )->all;
@@ -58,6 +66,14 @@ sub do_vars ($c) {
 
     my $id       = $c->stash->{template_id}   = $c->param('id');
     my $template = $c->stash->{template_obj}  = $c->db->template($id);
+    
+    if ( $c->stash->{person}->id != $template->person_id ) {
+        $c->render(
+            text   => "Access denied",
+            status => 403,
+        );
+        return;
+    }
     
     push @{$c->stash->{template_vars}}, 
         $template->search_related( 'template_vars', {} )->all;
@@ -102,15 +118,21 @@ sub remove_vars ($c) {
     my $var_id   = $c->param('var_id');
     my $var_obj  = $c->db->template_var($var_id);
 
-    # Confirm permissions....
+    if ( $c->stash->{person}->id != $template->person_id ) {
+        $c->render(
+            text   => "Access denied",
+            status => 403,
+        );
+        return;
+    }
     
     # Var belongs to the template submitted.
     push @{$c->stash->{errors}}, "You do not have permission to do that."
-        if $var_obj->template_id ne $template->id;
+        if $var_obj->template_id != $template->id;
    
     # Template belongs to the current user.
     push @{$c->stash->{errors}}, "You do not have permission to do that."
-        if $template->person_id ne $c->stash->{person}->id;
+        if $template->person_id != $c->stash->{person}->id;
 
     return if $c->stash->{errors};
 
@@ -141,6 +163,14 @@ sub do_editor ($c) {
     push @{$c->stash->{errors}}, "Template html content is required" unless $html;
 
     return if $c->stash->{errors};
+
+    if ( $c->stash->{person}->id != $template->person_id ) {
+        $c->render(
+            text   => "Access denied",
+            status => 403,
+        );
+        return;
+    }
 
     $template->name( $name );
     $template->description( $desc );
@@ -192,7 +222,7 @@ sub do_remove ($c) {
     my $id       = $c->stash->{template_id}   = $c->param('id');
     my $template = $c->stash->{template_obj}  = $c->db->template($id);
     
-    if ( $c->stash->{person}->id ne $template->person_id ) {
+    if ( $c->stash->{person}->id != $template->person_id ) {
         $c->render(
             text   => "Access denied",
             status => 403,
