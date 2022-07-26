@@ -1,9 +1,17 @@
 requires 'Mojolicious';
 requires 'Mojo::Pg';
 requires 'Mojo::File';
-requires 'DateTime::Format::Pg';
 requires 'Text::CSV';
 requires 'Text::Xslate';
+requires 'DateTime::Format::Pg';
+
+requires 'Email::Sender::Simple';
+requires 'Email::Sender::Transport::SMTP';
+requires 'Email::MIME::Kit';
+requires 'Email::MIME::Kit::Renderer::TT';
+requires 'MIME::Base64';
+requires 'Authen::SASL';
+
 
 test_requires "Test::More";
 test_requires "Test::Deep";

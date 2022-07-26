@@ -2,6 +2,9 @@ package TodayChecklist::Web::Controller::Auth;
 use Mojo::Base 'Mojolicious::Controller', -signatures;
 use Try::Tiny;
 use DateTime;
+use Email::Sender::Simple qw( sendmail );
+use Email::Sender::Transport::SMTP;
+use Email::MIME::Kit;
 
 sub show_register ( $c ) {
 
@@ -98,11 +101,19 @@ sub do_forgot ( $c ) {
     return 0 if $c->stash->{errors};
 
     # Make a token & send the email TODO
-    my $token = $person->create_auth_token;
-    $c->minion->enqueue( 'send_email', [ 'forgot_password.mkit', { 
+    my $token = $person->create_auth_token( 'forgot' );
+
+    my $mkit_path = $c->config->{mkit_path};
+    my $transport =  Email::Sender::Transport::SMTP->new(%{$c->config->{smtp}});
+
+    my $kit = Email::MIME::Kit->new({ source => "$mkit_path/forgot_password.mkit" } );
+
+    my $message = $kit->assemble( { 
         send_to => $email, 
-        link => "https://" . $c->config->{domain} . "/reset/$token",
-    }]);
+        link => 'https://' . $c->config->{domain} . "/reset/$token"
+    });
+
+    sendmail( $message, { transport => $transport } );
 
     # Let the user know the next steps.
     $c->stash->{success} = 1;

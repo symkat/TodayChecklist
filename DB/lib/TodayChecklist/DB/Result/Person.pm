@@ -266,12 +266,13 @@ sub get_settings {
 }
 
 sub create_auth_token {
-    my ( $self ) = @_;
+    my ( $self, $scope ) = @_;
 
     my $token = Data::GUID->guid_string;
 
     $self->create_related( 'auth_tokens', {
         token => $token,
+        scope => $scope,
     });
 
     return $token;
