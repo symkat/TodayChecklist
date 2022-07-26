@@ -7,7 +7,7 @@ sub index ( $c ) {
 
 }
 
-sub why ( $c ) {
+sub about ( $c ) {
 
 }
 
