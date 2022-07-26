@@ -24,7 +24,7 @@
                 <th><%= $document->name %></th>
                 <th><%= $document->description %></th>
                 <td>
-                    <form method="post" target="_blank" action="<%= $c->url_for( 'do_document_render') %>">
+                    <form autocomplete="off" method="post" target="_blank" action="<%= $c->url_for( 'do_document_render') %>">
                         <input type="hidden" name="document_id" value="<%= $document->id %>">
 
                         <button style="margin-left: 1.5em" title="Print Document" class="btn btn-sm btn-outline-secondary">

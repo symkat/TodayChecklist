@@ -4,7 +4,7 @@
 
 %= include '_base/error_window'
 
-<form method="POST" action="<%= $c->url_for( 'do_document_create' ) %>">
+<form autocomplete="off" method="POST" action="<%= $c->url_for( 'do_document_create' ) %>">
     <p><strong>Please answer the following questions to fill out the document.</strong></p>
     % for my $elem ( @{$template_vars} ) {
         % if ( $elem->template_var_type->name eq 'text' ) {

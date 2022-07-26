@@ -35,7 +35,7 @@
                     </a>
                 </td>
                 <td>
-                    <form method="post" action="<%= $c->url_for( 'remove_template', id => $template->id ) %>">
+                    <form autocomplete="off" method="post" action="<%= $c->url_for( 'remove_template', id => $template->id ) %>">
 
                         <button type="submit" style="margin-left: 1.5em" class="btn btn-sm btn-outline-danger">
                             <span data-feather="trash-2"></span>

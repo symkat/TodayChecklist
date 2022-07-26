@@ -19,7 +19,7 @@
                 <th><%= $template->name %></th>
                 <th><%= $template->description %></th>
                 <td>
-                    <form method="post" action="<%= $c->url_for( 'do_copy_template', id => $template->id ) %>">
+                    <form autocomplete="off" method="post" action="<%= $c->url_for( 'do_copy_template', id => $template->id ) %>">
                         <button type="submit" style="margin-left: 1.5em" class="btn btn-sm btn-outline-secondary">
                             <span data-feather="copy"></span>
                         </button>

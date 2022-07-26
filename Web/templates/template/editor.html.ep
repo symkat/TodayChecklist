@@ -4,7 +4,7 @@
 
 %= include '_base/error_window'
 
-<form method="POST" action="<%= $c->url_for( 'do_template_editor' ) %>">
+<form autocomplete="off" method="POST" action="<%= $c->url_for( 'do_template_editor' ) %>">
 
     <%= include '_base/form/input', type => 'text', name => 'name',
         title => 'Template Name',

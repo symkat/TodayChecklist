@@ -23,7 +23,7 @@
             <th><%= $var->template_var_type->name %></th>
             <th><%= $var->description %></th>
             <td>
-                <form method="post" action="<%= $c->url_for( 'remove_template_vars') %>">
+                <form autocomplete="off" method="post" action="<%= $c->url_for( 'remove_template_vars') %>">
                     <input type="hidden" name="var_id" value="<%= $var->id %>">
 
                     <button style="margin-left: 1.5em" class="btn btn-sm btn-outline-secondary">
@@ -42,7 +42,7 @@
 
 %= include '_base/error_window'
 
-<form method="POST" action="<%= $c->url_for( 'do_template_vars' ) %>">
+<form autocomplete="off" method="POST" action="<%= $c->url_for( 'do_template_vars' ) %>">
     
     <%= include '_base/form/input', type => 'text', name => 'var_name',
         title => 'Variable Name',
