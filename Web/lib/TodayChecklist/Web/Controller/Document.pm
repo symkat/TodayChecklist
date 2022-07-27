@@ -167,6 +167,8 @@ sub name ($c) {
     my $id       = $c->stash->{id}       = $c->param('id');
     my $document = $c->stash->{document} = $c->db->document($id);
 
+    $c->stash->{form_document_name} = $document->name;
+
     if ( $c->stash->{person}->id != $document->person_id ) {
         $c->render(
             text   => "Access denied",

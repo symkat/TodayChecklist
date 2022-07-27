@@ -16,6 +16,7 @@
                 <th>Created At</th>
                 <th>Print</th>
                 <th>Edit</th>
+                <th>Rename</th>
             </tr>
         </thead>
         <tbody>
@@ -34,6 +35,11 @@
                 </td>
                 <td>
                     <a href="<%= $c->url_for( 'show_document_editor', id => $document->id ) %>" title="Edit Document" style="margin-left: 1.5em" class="btn btn-sm btn-outline-secondary">
+                        <span data-feather="edit"></span>
+                    </a>
+                </td>
+                <td>
+                    <a href="<%= $c->url_for( 'show_document_name', id => $document->id ) %>" title="Rename Document" style="margin-left: 1.5em" class="btn btn-sm btn-outline-secondary">
                         <span data-feather="file-text"></span>
                     </a>
                 </td>
