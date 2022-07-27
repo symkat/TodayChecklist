@@ -26,15 +26,11 @@ YOUR_DOMAIN = config['stripe_return_domain']
 @app.route('/stripe/get-checkout-link', methods=['GET'])
 def create_checkout_session():
     try:
-        prices = stripe.Price.list(
-            lookup_keys=[request.args.get('lookup_key')],
-            expand=['data.product']
-        )
 
         checkout_session = stripe.checkout.Session.create(
             line_items=[
                 {
-                    'price': prices.data[0].id,
+                    'price': request.args.get('lookup_key'),
                     'quantity': 1,
                 },
             ],
@@ -67,7 +63,7 @@ def customer_portal():
 def session_to_customer():
     checkout_session_id = request.args.get('session_id')
     checkout_session = stripe.checkout.Session.retrieve(checkout_session_id)
-        
+
     return jsonify({ 'customer_id' : checkout_session.customer })
 
 
