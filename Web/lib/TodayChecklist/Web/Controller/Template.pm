@@ -183,9 +183,22 @@ sub do_editor ($c) {
 }
 
 sub do_copy ($c) {
+    $c->stash->{template} = 'dashboard/templates_default';
+
     my $id       = $c->stash->{template_id}   = $c->param('id');
     my $template = $c->stash->{template_obj}  = $c->db->template($id);
     
+
+    # Throw error for copy template on more than 5 templates unless the user is subscribed.
+    if ( ! $c->stash->{person}->is_subscribed ) {
+        if ( $c->stash->{person}->search_related( 'templates', {} )->count >= 5 ) {
+            push @{$c->stash->{errors}}, "You must subscribe to save more than 5 templates.";
+            push @{$c->stash->{templates}},
+                $c->stash->{person}->search_related('templates')->all;
+            return;
+        }
+    }
+
     # Only allow system templates to be copied.
     if ( ! $template->is_system ) {
         $c->render(

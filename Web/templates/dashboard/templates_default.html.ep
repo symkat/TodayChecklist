@@ -8,6 +8,8 @@
     </div>
 %  }
 
+%= include '_base/error_window'
+
 %= include 'dashboard/_nav', page => 'templates_default'
 
 % if ( $c->stash->{templates} ) {
