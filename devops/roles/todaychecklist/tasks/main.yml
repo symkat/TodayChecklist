@@ -189,7 +189,8 @@
 
 - name: Get template file names from host
   find:
-    paths: /home/manager/todaychecklist/DB/etc/templates/
+    paths: "/home/manager/todaychecklist/DB/etc/templates/"
+    patterns: '*.json'
   register: templates
 
 
