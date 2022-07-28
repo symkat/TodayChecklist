@@ -14,7 +14,7 @@
     </div>
 %  }
 
-    <form style="margin-top: 1.5em" method="POST" action="<%= $c->url_for( 'do_register' ) %>">
+    <form autocomplete="off" style="margin-top: 1.5em" method="POST" action="<%= $c->url_for( 'do_register' ) %>">
 
         <%= include '_base/form/input', type => 'text', name => 'name', 
             title => 'Your name', 
