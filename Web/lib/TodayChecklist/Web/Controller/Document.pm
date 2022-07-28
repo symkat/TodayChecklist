@@ -1,6 +1,7 @@
 package TodayChecklist::Web::Controller::Document;
 use Mojo::Base 'Mojolicious::Controller', -signatures;
 use Text::Xslate;
+use Encode qw( encode_utf8 );
 
 my $xslate = Text::Xslate->new( 
     cache  => 0,
@@ -219,7 +220,7 @@ sub do_render ($c) {
     my $content = $xslate->render_string( $document->template->content, $document->payload );
 
     $c->render(
-        data   => $content,
+        data   => encode_utf8($content),
         format => 'html',
         status => 200,
     );
