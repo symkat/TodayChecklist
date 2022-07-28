@@ -12,7 +12,7 @@
 <div class="pricing-header mt-5 p-3 pb-md-4 mx-auto text-center">
     <h2 class="display-6 text-center mb-4">Create a document</h2>
     <p class="fs-5 text-muted">
-        Documents are intended to be printed and added to your paper planning system.  Each document is a template, and the answers to the questions the template asks.
+        Documents can be printed to be added to your paper planning system.  Each document is made by answering questions on a form.
     </p>
 </div>
 
@@ -21,7 +21,7 @@
         <div class="card h-100">
             <div class="card-body">
                 <h5 class="card-title">Step 1: Choose a template</h5>
-                <p class="card-text">Templates are printable HTML files.  There are templates for checklists, projects, and more.</p>
+                <p class="card-text">Use a preexisting template for a project or checklist, or make your own template.</p>
             </div>
         </div>
     </div>
@@ -29,7 +29,7 @@
         <div class="card h-100">
             <div class="card-body">
                 <h5 class="card-title">Step 2: Fill in the form</h5>
-                <p class="card-text">Templates combine the HTML with your answers to questions.  You might answer the steps to complete something for a checklist, a start date or something else.</p>
+                <p class="card-text">Each template has questions to answer to make the document.  Answer the questions on the form.</p>
             </div>
         </div>
     </div>
@@ -37,7 +37,7 @@
         <div class="card h-100">
             <div class="card-body">
                 <h5 class="card-title">Step 3: Save &amp; Print</h5>
-                <p class="card-text">Once a template is selected and the answers are filled in the form can be saved and printed to add to your paper planning.</p>
+                <p class="card-text">Once everything is answered you can print your document!  The file will continue to show in your documents and can be printed again.</p>
             </div>
         </div>
     </div>
@@ -51,7 +51,7 @@
 <div class="pricing-header mt-5 p-3 pb-md-4 mx-auto text-center">
     <h2 class="display-6 text-center mb-4">Create a template</h2>
     <p class="fs-5 text-muted">
-        Templates are HTML documents that use the Text::Xslate templating engine.  Variables can be attached that will prompt you to answer questions when you create a document from the template.
+        Templates are used to make documents.  Templates can be written in HTML/CSS or you can copy an existing template and modify it.  Use variables by posing questions to yourself, and your answers can be added to the document.
     </p>
 </div>
 
@@ -60,7 +60,7 @@
         <div class="card h-100">
             <div class="card-body">
                 <h5 class="card-title">Step 1: Write the HTML</h5>
-                <p class="card-text">When you create a template you will be prompted for its name, a description, and the template content.  You can use <a href="https://metacpan.org/pod/Text::Xslate::Syntax::Kolon">Kolon Syntax for Template::Xslate</a>.  You can copy and edit any default template as well.</p>
+                <p class="card-text">When you create a template you will be prompted for its name, a description, and the HTML/CSS template content.  You can copy and edit any default template as well.</p>
             </div>
         </div>
     </div>
@@ -68,7 +68,7 @@
         <div class="card h-100">
             <div class="card-body">
                 <h5 class="card-title">Step 2: Attach variables</h5>
-                <p class="card-text">The name of a variable can be used in the template, the title and description will be used to prompt you for an answer.</p>
+                <p class="card-text">The form questions to answer come from variables in the document.  You'll next define the name of your variables and the question to ask for it.</p>
             </div>
         </div>
     </div>
@@ -76,7 +76,7 @@
         <div class="card h-100">
             <div class="card-body">
                 <h5 class="card-title">Step 3: Save &amp; Use</h5>
-                <p class="card-text">Once you are finished attaching variables, create a document from the template to see it in action!</p>
+                <p class="card-text">Once you are finished attaching variables, create a document from the template to see your variables in action and your document created!</p>
             </div>
         </div>
     </div>
