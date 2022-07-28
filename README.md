@@ -4,7 +4,7 @@ This is the source code for [TodayChecklist](https://todaychecklist.com/).
 
 ## Installation
 
-The `devops/` directory provides a role and playbook for installing and maintaining WeightGrapher.
+The `devops/` directory provides a role and playbook for installing and maintaining TodayChecklist.
 
 You will need `ansible-playbook` installed, and this repository checked out to begin installation.  The machine you use ansible-playbook from does not need to be the machine you are installing TodayChecklist on.
 
