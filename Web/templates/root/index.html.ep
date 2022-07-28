@@ -44,7 +44,11 @@
 </div>
 
 <div class="mt-5 mb-5">
-    <div class="row">
+    <div class="row text-center">
+        <h2 class="display-6 text-center mb-4">See it in action</h2>
+        <div class="col">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/cUqcbSr8sJ8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
     </div>
 </div>
 
