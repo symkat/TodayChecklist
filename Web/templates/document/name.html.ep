@@ -13,7 +13,7 @@
 </form>
 
 
-<p>If you'd like to name the document, provide one here and it'll be named in your <a target="_blank" href="<%= $c->url_for('dashboard') %>">documents</a>.
+<p>If you'd like to name the document, provide one here and it'll be named in your <a target="_blank" href="<%= $c->url_for('show_dashboard') %>">documents</a>.
 
 <hr />
 
