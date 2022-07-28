@@ -9,6 +9,15 @@
     </div>
 </header>
 
+<div class="mt-5 mb-5">
+    <div class="row text-center">
+        <h2 class="display-6 text-center mb-4">See it in action</h2>
+        <div class="col">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/cUqcbSr8sJ8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
+</div>
+
 <div class="pricing-header mt-5 p-3 pb-md-4 mx-auto text-center">
     <h2 class="display-6 text-center mb-4">Create a document</h2>
     <p class="fs-5 text-muted">
@@ -43,14 +52,6 @@
     </div>
 </div>
 
-<div class="mt-5 mb-5">
-    <div class="row text-center">
-        <h2 class="display-6 text-center mb-4">See it in action</h2>
-        <div class="col">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/cUqcbSr8sJ8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-    </div>
-</div>
 
 <div class="pricing-header mt-5 p-3 pb-md-4 mx-auto text-center">
     <h2 class="display-6 text-center mb-4">Create a template</h2>
