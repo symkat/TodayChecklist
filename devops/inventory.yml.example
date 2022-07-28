@@ -1,0 +1,23 @@
+todaychecklist:
+  hosts:
+    your-server-or-ip:
+      domain_name: your-server.com
+      repo: https://github.com/symkat/TodayChecklist.git
+      database:
+        todaychecklist:
+          user: checklist
+          pass: SomeSecurePasswordThatIsSuperSecret
+          name: todaychecklist
+          host: 127.0.0.1
+      smtp:
+        host: smtp.some-provider.com
+        port: 25
+        sasl_username: someuser
+        sasl_password: somepassword
+      secrets:
+        - SomeReallyLongStringShouldGoHere
+      mkit_path: /home/manager/todaychecklist/Web/mkits
+      stripe_api_key: 
+      stripe_return_domain: https://your-server.com/
+      # This is the access for the stripe-internal-server.py
+      stripe_backend: http://127.0.0.1:8000
