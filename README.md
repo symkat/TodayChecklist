@@ -1,3 +1,7 @@
+# TodayChecklist
+
+This is the source code for [TodayChecklist](https://todaychecklist.com/).
+
 ## Installation
 
 The `devops/` directory provides a role and playbook for installing and maintaining WeightGrapher.
@@ -49,7 +53,5 @@ Changes to files under `/home/manager/todaychecklist/Web/lib` or `/home/manager/
 | flip\_admin      | Given an email address, mark the person as an admin     |
 
 Commands are given as arguments to `./script/todaychecklist` when in `/home/manager/todaychecklist/Web`.
-
-
 
 
