@@ -1,3 +1,5 @@
+# This project is no longer maintained
+
 # TodayChecklist
 
 This is the source code for [TodayChecklist](https://todaychecklist.com/).
